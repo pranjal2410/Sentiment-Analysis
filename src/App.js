@@ -6,7 +6,7 @@ const App = () => {
     <div style = {{
       margin : '0',
       minHeight : '100vh',
-      backgroundColor: '#424242'
+      backgroundImage: ''
     }}>
       <Login />
     </div>
