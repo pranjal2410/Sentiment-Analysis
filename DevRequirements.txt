@@ -1,0 +1,21 @@
+Login/Signup:-
+1. Name
+2. Username
+3. Email(OTP generation+login credential)
+4. Twitter boolean field(for now)
+5. Photo(optional)
+6. Region(City, State)
+
+Landing page:-
+- Dashboard
+
+Dashboard contents:
+1. 29 different cards displaying number of active, recovered and total cases in 28 states of India and the last one for the country as a whole
+2. SideNav menu containing options for login/signup (if user isn't authenticated) and once logged in, profile edit, display list of people registered from your region etc
+
+Main sentiment analysis page:-
+1. Landing :- Graphically display number of total cases in every state in the form of bar graph or histogram
+2. Give the user an option to change type of graph for eg.- bar graph to pie chart or pie chart to histogram
+3. Display categories of different datasets in which the user would like to visualize eg.- no. of active cases, total cases or recovered cases etc also, wrt time or active vs
+ recovered or no. of cases vs states etc.(each of this graph should be available in different types)
+4. Main required graph is no. of sentiments vs positive and negative(will add neutral sentiment once its done) and this graph should be available in all types.
