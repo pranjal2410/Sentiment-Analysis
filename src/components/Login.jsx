@@ -1,10 +1,21 @@
 import React from 'react';
 import { Container ,Grid, Link, Typography, makeStyles, Paper, TextField, Button, Avatar } from '@material-ui/core';
-import { LockOpen } from '@material-ui/icons';
+import { LockOpen, Twitter } from '@material-ui/icons';
 
 const useStyles = makeStyles((theme) => ({
+    twitter : {
+        color: 'white',
+        fontSize: '70px',
+        paddingLeft: '43%',
+        paddingBottom: '2%'
+    },
+    welcome : {
+        color:'white',
+        fontSize: '31px',
+        paddingBottom: '15%'                    
+    },
     cont : {
-        paddingTop: '50%'
+        paddingTop: '15%'
     },
     form : {
         padding: '20px',
@@ -21,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
     },
     avatar: {
         margin: 'auto',
-        backgroundColor: theme.palette.secondary.main,
+        backgroundColor: theme.palette.primary.main,
     },
     submit: {
         margin: theme.spacing(3, 0, 2),
@@ -36,6 +47,10 @@ const Login = () => {
     return (
         <Container component="main" maxWidth="sm">
             <div className={classes.cont}>
+                <Twitter className={classes.twitter}/>    
+                <Typography className={classes.welcome}>
+                    WELCOME BACK TO THE DASHBOARD!
+                </Typography>
                 <Paper className={classes.paper} elevation={5}>
                     <div class={classes.heading}>
                         <Avatar className={classes.avatar}>
@@ -72,6 +87,7 @@ const Login = () => {
                         type="submit"
                         variant="contained"
                         color="primary"
+                        fullWidth
                         className={classes.submit}
                         >
                         Log In

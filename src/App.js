@@ -1,14 +1,11 @@
 import React from 'react';
-import Login from './components/Login';
+import Signup from './components/Signup';
+
 
 const App = () => {
   return (
-    <div style = {{
-      margin : '0',
-      minHeight : '100vh',
-      backgroundImage: ''
-    }}>
-      <Login />
+    <div className="main">
+    <Signup />
     </div>
   );
 }
