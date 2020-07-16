@@ -1,6 +1,7 @@
 import React from 'react';
-import { Container ,Grid, Link, Typography, makeStyles, Paper, TextField, Button, Avatar, FormControlLabel, Checkbox } from '@material-ui/core';
+import { Container ,Grid, Typography, makeStyles, Paper, TextField, Button, Avatar, FormControlLabel, Checkbox } from '@material-ui/core';
 import { LockOutlined, Twitter } from '@material-ui/icons';
+import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
     cont : {
@@ -32,6 +33,13 @@ const useStyles = makeStyles((theme) => ({
         paddingTop: '5px',
         paddingBottom: '10px',
     },
+    grid : {
+        paddingTop : theme.spacing(1)
+    },
+    link : {
+        textDecoration: 'none',
+        color : theme.palette.primary.main
+    }
 }));
 
 const Signup = () => {
@@ -49,7 +57,7 @@ const Signup = () => {
                             <LockOutlined />
                         </Avatar>
                         <Typography className={classes.signup} align="center" variant="h4">
-                            SIGNUP
+                            SIGN UP
                         </Typography>
                     </div>
                     <form className={classes.form}>
@@ -67,38 +75,60 @@ const Signup = () => {
                             />
                         </Grid>
                         <Grid item xs={12} sm={6}>
-                        <TextField
-                            variant="outlined"
-                            required
-                            fullWidth
-                            id="lastName"
-                            label="Last Name"
-                            name="lastName"
-                            autoComplete="lname"
-                        />
+                            <TextField
+                                variant="outlined"
+                                required
+                                fullWidth
+                                id="lastName"
+                                label="Last Name"
+                                name="lastName"
+                                autoComplete="lname"
+                            />
                         </Grid>
                         <Grid item xs={12}>
-                        <TextField
-                            variant="outlined"
-                            required
-                            fullWidth
-                            id="email"
-                            label="Email Address"
-                            name="email"
-                            autoComplete="email"
-                        />
+                            <TextField
+                                variant="outlined"
+                                required
+                                fullWidth
+                                id="email"
+                                label="Email Address"
+                                name="email"
+                                autoComplete="email"
+                            />
                         </Grid>
                         <Grid item xs={12}>
-                        <TextField
-                            variant="outlined"
-                            required
-                            fullWidth
-                            name="password"
-                            label="Password"
-                            type="password"
-                            id="password"
-                            autoComplete="current-password"
-                        />
+                            <TextField
+                                variant="outlined"
+                                required
+                                fullWidth
+                                name="password"
+                                label="Password"
+                                type="password"
+                                id="password"
+                                autoComplete="current-password"
+                            />
+                        </Grid>
+                        <Grid item xs={12} sm={5}>
+                            <TextField
+                                variant="outlined"
+                                required
+                                fullWidth
+                                id="city"
+                                label="Enter your city"
+                                name="city"
+                                autoComplete="city"
+                            />
+                        </Grid> 
+                        <Grid item xs={12} sm={7}>
+                            <TextField
+                                variant="outlined"
+                                required
+                                fullWidth
+                                id="state"
+                                label="Enter your state"
+                                name="state"
+                                autoComplete="state"
+                            />
                         </Grid>
                         <Grid item xs={12}>
                         <FormControlLabel
@@ -116,14 +146,13 @@ const Signup = () => {
                     >
                         Sign Up
                     </Button>
-                    <Grid container justify="flex-end">
-                        <Grid item>
-                        <Link href="#" variant="body2">
-                            Already have an account? Sign in
+                    <Grid container className={classes.grid}>
+                        <Grid item className={classes.grid}>
+                        <Link to="/login" variant="body2" className={classes.link}>
+                            Already have an account? Log in
                         </Link>
                         </Grid>
-                    </Grid>
-                                    
+                    </Grid>            
                     </form>    
                 </Paper>
             </div>

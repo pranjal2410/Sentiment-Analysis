@@ -1,8 +1,12 @@
 import React from 'react';
-import { Container ,Grid, Link, Typography, makeStyles, Paper, TextField, Button, Avatar } from '@material-ui/core';
+import { Container, Typography, makeStyles, Paper, TextField, Button, Avatar } from '@material-ui/core';
 import { LockOpen, Twitter } from '@material-ui/icons';
+import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
+    cont : {
+        paddingTop: '15%'
+    },
     twitter : {
         color: 'white',
         fontSize: '70px',
@@ -14,31 +18,33 @@ const useStyles = makeStyles((theme) => ({
         fontSize: '31px',
         paddingBottom: '15%'                    
     },
-    cont : {
-        paddingTop: '15%'
-    },
-    form : {
-        padding: '20px',
-        paddingTop: '0px',
-        paddingBottom: '10px',
-
-    },
-    header : {
+    heading : {
         paddingTop: '10px'
-    },
-    grid : {
-        paddingTop: '10px',
-        
     },
     avatar: {
         margin: 'auto',
         backgroundColor: theme.palette.primary.main,
     },
+    login : {
+        paddingTop: '10px'
+    },
+    form : {
+        padding: '20px',
+        paddingTop: '0px',
+        paddingBottom: '10px',
+        color: 'white'
+
+    }, 
     submit: {
         margin: theme.spacing(3, 0, 2),
     },
-    heading : {
-        paddingTop: '10px'
+    grid : {
+        paddingTop: '10px',
+        
+    },
+    link : {
+        textDecoration: 'none',
+        color : theme.palette.primary.main
     }
 }));
 
@@ -51,13 +57,13 @@ const Login = () => {
                 <Typography className={classes.welcome}>
                     WELCOME BACK TO THE DASHBOARD!
                 </Typography>
-                <Paper className={classes.paper} elevation={5}>
+                <Paper elevation={5}>
                     <div class={classes.heading}>
                         <Avatar className={classes.avatar}>
                             <LockOpen />
                         </Avatar>
-                        <Typography className={classes.header} align="center" variant="h4">
-                            LOGIN
+                        <Typography className={classes.login} align="center" variant="h4">
+                            LOG IN
                         </Typography>
                     </div>
                     <form className={classes.form}>
@@ -92,18 +98,9 @@ const Login = () => {
                         >
                         Log In
                         </Button>
-                        <Grid container className={classes.grid}>
-                            <Grid item xs>
-                            <Link href="#" variant="body2">
-                                Forgot password?
-                            </Link>
-                            </Grid>
-                            <Grid item>
-                            <Link href="#" variant="body2">
-                                {"Don't have an account? Sign Up"}
-                            </Link>
-                            </Grid>
-                        </Grid>
+                        <Link to="/" variant="body2" className={classes.link}>
+                            {"Don't have an account? Sign Up"}
+                        </Link>
                     </form>    
                 </Paper>
             </div>
