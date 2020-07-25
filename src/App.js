@@ -8,12 +8,12 @@ import { BrowserRouter, Route } from 'react-router-dom';
 const App = () => {
   return (
     <Dashboard />
-    // <BrowserRouter>
-    //   <div className="main">
-    //     <Route exact path='/' component={Signup} />
-    //     <Route path='/login' component={Login} />
-    //   </div>
-    // </BrowserRouter>
+    /* <BrowserRouter>
+      <div className="main">
+        <Route exact path='/' component={Signup} />
+        <Route path='/login' component={Login} />
+      </div>
+    </BrowserRouter> */
   );
 }
 

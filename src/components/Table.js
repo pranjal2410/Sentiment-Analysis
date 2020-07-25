@@ -1,17 +1,38 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { makeStyles } from '@material-ui/core/styles';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Container, Typography, Grid } from '@material-ui/core';
+import CircularProgress from '@material-ui/core/CircularProgress';
+
 
 const useStyles = makeStyles({
   table: {
     minWidth: 650,
+  },
+  headers : {
+    paddingBottom: '5px'
+  },
+  time : {
+    paddingBottom: '40px'
+  },
+  loading : {
+    margin: 'auto',
+    width: '50%',
+    textAlign:'center',
+    paddingTop: '20%'
+  },
+  paperNumber: {
+    paddingTop: '30px',
+    textAlign: 'center',
+    fontSize: '36px',
+    fontWeight: 'bold',
+    color: '#a317ad'
+  },
+  paperTitle : {
+    textAlign: 'center',
+    paddingTop: '2px',
+    paddingBottom: '22px',
+    fontSize: '14px'
   },
 });
 
@@ -21,6 +42,10 @@ const SimpleTable = () => {
   const classes = useStyles();
   const dummy = null;
   const [rows, setRows] = useState([]);
+  const [latest, setLatest] = useState({});
+  const [time, setTime] = useState({});
+  const [spinner, setSpinner] = useState(true);
+
 
   const fetchrows = () => {
     axios({
@@ -31,43 +56,138 @@ const SimpleTable = () => {
       url: "https://api.rootnet.in/covid19-in/stats/latest"
     })
     .then((response) => {
-      setRows(response.regional);
+      setTimeout(() => setSpinner(false), 1000);
+      setLatest(response.data.data.summary);
+      setRows(response.data.data.regional);
+      setTime(response.data.lastRefreshed);
     })
     .catch((err) => window.alert(err));
   }
 
   useEffect(() => { 
     fetchrows() 
-  }, [dummy]);
+  }, [dummy], {dummy}, {dummy});
+
   return (
-    <TableContainer component={Paper}>
-      <Table className={classes.table} aria-label="simple table">
-        <TableHead>
-          <TableRow>
-            <TableCell>Location</TableCell>
-            <TableCell align="right">Confirmed Cases Indian</TableCell>
-            <TableCell align="right">Confirmed Cases Foreign</TableCell>
-            <TableCell align="right">Total Confirmed Cases</TableCell>
-            <TableCell align="right">Discharged</TableCell>
-            <TableCell align="right">Deaths</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {rows.map((row) => (
-            <TableRow key={row.name}>
-              <TableCell component="th" scope="row">
-                {row.loc}
-              </TableCell>
-              <TableCell align="right">{row.confirmedCasesIndian}</TableCell>
-              <TableCell align="right">{row.confirmedCasesForeign}</TableCell>
-              <TableCell align="right">{row.totalConfirmed}</TableCell>
-              <TableCell align="right">{row.discharged}</TableCell>
-              <TableCell align="right">{row.deaths}</TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-    </TableContainer>
+    <Container>
+    { spinner ? 
+
+    (
+      <div className={classes.loading}>
+        <CircularProgress />
+        <Typography variant="h6">Loading you data..</Typography>
+      </div>
+    ):(
+      <div>
+        <Typography variant="h2" className={classes.headers}>
+            Current COVID-19 Cases In India
+        </Typography>
+        <Typography className={classes.time}>
+          Cases updated on {time.slice(0,10)} at {time.slice(11,19)} IST 
+        </Typography>
+        <Grid container spacing={3} style={{paddingBottom:'40px'}}>
+          <Grid item xs={6}>
+            <Paper elevation={3} style={{paddingLeft:'2px', paddingRight:'2px'}}>
+              <Typography className={classes.paperNumber}>
+                {latest.total}
+              </Typography>
+              <Typography className={classes.paperTitle} style ={{color: 'red'}}>
+                Confirmed Cases
+              </Typography>
+            </Paper>
+          </Grid>
+          <Grid item xs={6}>
+          <Paper elevation={3} style={{paddingLeft:'2px', paddingRight:'2px'}}>
+              <Typography className={classes.paperNumber}>
+                {latest.confirmedCasesIndian}
+              </Typography>
+              <Typography className={classes.paperTitle} style ={{color: 'red'}}>
+                Confirmed Cases Indian
+              </Typography>
+            </Paper>
+          </Grid>
+          <Grid item xs={6}>
+          <Paper elevation={3} style={{paddingLeft:'2px', paddingRight:'2px'}}>
+              <Typography className={classes.paperNumber}>
+                {latest.confirmedCasesForeign}
+              </Typography>
+              <Typography className={classes.paperTitle} style ={{color: 'red'}}>
+                Confirmed Cases Foreign
+              </Typography>
+            </Paper>
+          </Grid>
+          <Grid item xs={6}>
+          <Paper elevation={3} style={{paddingLeft:'2px', paddingRight:'2px'}}>
+              <Typography className={classes.paperNumber}>
+                {latest.discharged}
+              </Typography>
+              <Typography className={classes.paperTitle} style ={{color: 'green'}}>
+                Discharged
+              </Typography>
+            </Paper>
+          </Grid>
+          <Grid item xs={6}>
+          <Paper elevation={3} style={{paddingLeft:'2px', paddingRight:'2px'}}>
+              <Typography className={classes.paperNumber}>
+                {latest.deaths}
+              </Typography>
+              <Typography className={classes.paperTitle} style ={{color: 'red'}}>
+                Deaths
+              </Typography>
+            </Paper>
+          </Grid>
+          <Grid item xs={6}>
+          <Paper elevation={3} style={{paddingLeft:'2px', paddingRight:'2px'}}>
+              <Typography className={classes.paperNumber}>
+                {latest.confirmedButLocationUnidentified}
+              </Typography>
+              <Typography className={classes.paperTitle} style ={{color: 'red'}}>
+                Confirmed Cases Uniidentified
+              </Typography>
+            </Paper>
+          </Grid>
+        </Grid>
+        
+       
+        
+        <Typography variant="h2" className={classes.headers} >
+            State Wise COVID-19 Data In India
+        </Typography>
+        <Typography className={classes.time}>
+          Cases updated on {time.slice(0,10)} at {time.slice(11,19)} IST 
+        </Typography>
+        <TableContainer component={Paper}>
+          <Table className={classes.table} aria-label="simple table">
+            <TableHead>
+              <TableRow>
+                <TableCell align="center">Location</TableCell>
+                <TableCell align="center">Total Confirmed Cases</TableCell>
+                <TableCell align="center">Confirmed Cases Indian</TableCell>
+                <TableCell align="center">Confirmed Cases Foreign</TableCell>
+                
+                <TableCell align="center">Discharged</TableCell>
+                <TableCell align="center">Deaths</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {rows.map((row) => (
+                <TableRow key={Math.random()}>
+                  <TableCell component="th" scope="row" align="center">
+                    {row.loc}
+                  </TableCell>
+                  <TableCell align="center">{row.confirmedCasesIndian}</TableCell>
+                  <TableCell align="center">{row.confirmedCasesForeign}</TableCell>
+                  <TableCell align="center">{row.totalConfirmed}</TableCell>
+                  <TableCell align="center">{row.discharged}</TableCell>
+                  <TableCell align="center">{row.deaths}</TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </div>
+    )}
+    </Container>
   );
 }
 

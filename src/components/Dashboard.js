@@ -2,25 +2,13 @@ import React from 'react';
 import SimpleTable from './Table';
 import clsx from 'clsx';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
-import Drawer from '@material-ui/core/Drawer';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import List from '@material-ui/core/List';
-import Typography from '@material-ui/core/Typography';
-import Divider from '@material-ui/core/Divider';
-import IconButton from '@material-ui/core/IconButton';
+import { Drawer, CssBaseline, AppBar, Toolbar, List, Typography, Divider, IconButton, ListItem, ListItemIcon, ListItemText } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import MailIcon from '@material-ui/icons/Mail';
 
 
-const drawerWidth = 240;
+const drawerWidth = 340;
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -31,6 +19,7 @@ const useStyles = makeStyles((theme) => ({
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
     }),
+    backgroundColor: "#00acee"
   },
   appBarShift: {
     width: `calc(100% - ${drawerWidth}px)`,
@@ -57,7 +46,6 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     alignItems: 'center',
     padding: theme.spacing(0, 1),
-    // necessary for content to be below app bar
     ...theme.mixins.toolbar,
     justifyContent: 'flex-end',
   },
@@ -77,12 +65,34 @@ const useStyles = makeStyles((theme) => ({
     }),
     marginLeft: 0,
   },
-  header : {
-    paddingBottom: '30px'
+  profile : {
+    backgroundColor:'#00acee',
+    height:'200px',
+    width:'200px',
+    marginLeft: '21%',
+    marginTop: '30px',
+    borderRadius: '100%',
+    textAlign:'center',
+    paddingTop: '12%',
+    marginBottom: '30px',
+    fontSize : '6em',
+    color:'white'
+  },
+  name : {
+    textAlign:'center',
+    fontSize:'2em',
+    marginBottom : '0px',
+
+  },
+  email : {
+    margin: '2px',
+    color : '##808080',
+    textAlign: 'center',
+    marginBottom: '30px',
   },
 }));
 
-export default function Dashboard() {
+const Dashboard = () => {
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
@@ -103,7 +113,7 @@ export default function Dashboard() {
         className={clsx(classes.appBar, {
           [classes.appBarShift]: open,
         })}
-      >
+        >
         <Toolbar>
           <IconButton
             color="inherit"
@@ -134,35 +144,22 @@ export default function Dashboard() {
           </IconButton>
         </div>
         <Divider />
-        <List>
-          {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-            <ListItem button key={text}>
-              <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItem>
-          ))}
-        </List>
+        <div className={classes.profile}> JD </div>
         <Divider />
-        <List>
-          {['All mail', 'Trash', 'Spam'].map((text, index) => (
-            <ListItem button key={text}>
-              <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItem>
-          ))}
-        </List>
+        <p className={classes.name}>John Doe</p>
+        <p className={classes.email}>johndoe@gmail.com | Pune, Maharashtra</p>
+        <Divider/>
       </Drawer>
       <main
         className={clsx(classes.content, {
           [classes.contentShift]: open,
         })}
       >
-        <div className={classes.drawerHeader} />
-        <Typography variant="h3" align="center" className={classes.header}>
-          State Wise Covid-19 Data
-        </Typography>
-        <SimpleTable />
+      <div className={classes.drawerHeader} />
+      <SimpleTable />
       </main>
     </div>
   );
 }
+
+export default Dashboard;
