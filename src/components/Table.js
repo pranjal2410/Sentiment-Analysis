@@ -5,6 +5,8 @@ import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper
 import CircularProgress from '@material-ui/core/CircularProgress';
 
 
+let cntr = -34;
+
 const useStyles = makeStyles({
   table: {
     minWidth: 650,
@@ -51,7 +53,7 @@ const SimpleTable = () => {
     axios({
       method:'GET',
       headers: {
-        "Content-Type": "appliction/json"
+        "Content-Type": "application/json"
       },
       url: "https://api.rootnet.in/covid19-in/stats/latest"
     })
@@ -91,7 +93,7 @@ const SimpleTable = () => {
               <Typography className={classes.paperNumber}>
                 {latest.total}
               </Typography>
-              <Typography className={classes.paperTitle} style ={{color: 'red'}}>
+              <Typography className={classes.paperTitle}>
                 Confirmed Cases
               </Typography>
             </Paper>
@@ -101,7 +103,7 @@ const SimpleTable = () => {
               <Typography className={classes.paperNumber}>
                 {latest.confirmedCasesIndian}
               </Typography>
-              <Typography className={classes.paperTitle} style ={{color: 'red'}}>
+              <Typography className={classes.paperTitle}>
                 Confirmed Cases Indian
               </Typography>
             </Paper>
@@ -111,7 +113,7 @@ const SimpleTable = () => {
               <Typography className={classes.paperNumber}>
                 {latest.confirmedCasesForeign}
               </Typography>
-              <Typography className={classes.paperTitle} style ={{color: 'red'}}>
+              <Typography className={classes.paperTitle}>
                 Confirmed Cases Foreign
               </Typography>
             </Paper>
@@ -121,7 +123,7 @@ const SimpleTable = () => {
               <Typography className={classes.paperNumber}>
                 {latest.discharged}
               </Typography>
-              <Typography className={classes.paperTitle} style ={{color: 'green'}}>
+              <Typography className={classes.paperTitle}>
                 Discharged
               </Typography>
             </Paper>
@@ -131,7 +133,7 @@ const SimpleTable = () => {
               <Typography className={classes.paperNumber}>
                 {latest.deaths}
               </Typography>
-              <Typography className={classes.paperTitle} style ={{color: 'red'}}>
+              <Typography className={classes.paperTitle}>
                 Deaths
               </Typography>
             </Paper>
@@ -141,7 +143,7 @@ const SimpleTable = () => {
               <Typography className={classes.paperNumber}>
                 {latest.confirmedButLocationUnidentified}
               </Typography>
-              <Typography className={classes.paperTitle} style ={{color: 'red'}}>
+              <Typography className={classes.paperTitle}>
                 Confirmed Cases Uniidentified
               </Typography>
             </Paper>
@@ -160,28 +162,29 @@ const SimpleTable = () => {
           <Table className={classes.table} aria-label="simple table">
             <TableHead>
               <TableRow>
+                <TableCell align="center">Serial Number</TableCell>
                 <TableCell align="center">Location</TableCell>
                 <TableCell align="center">Total Confirmed Cases</TableCell>
                 <TableCell align="center">Confirmed Cases Indian</TableCell>
                 <TableCell align="center">Confirmed Cases Foreign</TableCell>
-                
                 <TableCell align="center">Discharged</TableCell>
                 <TableCell align="center">Deaths</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
-              {rows.map((row) => (
+              {rows.map((row) => {
+                return (
                 <TableRow key={Math.random()}>
-                  <TableCell component="th" scope="row" align="center">
-                    {row.loc}
-                  </TableCell>
+                  <TableCell align="center">{cntr++}</TableCell>
+                  <TableCell align="center">{row.loc}</TableCell>
                   <TableCell align="center">{row.confirmedCasesIndian}</TableCell>
                   <TableCell align="center">{row.confirmedCasesForeign}</TableCell>
                   <TableCell align="center">{row.totalConfirmed}</TableCell>
                   <TableCell align="center">{row.discharged}</TableCell>
                   <TableCell align="center">{row.deaths}</TableCell>
                 </TableRow>
-              ))}
+                );
+                })}
             </TableBody>
           </Table>
         </TableContainer>
