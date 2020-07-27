@@ -12,7 +12,10 @@ const drawerWidth = 340;
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    display: 'flex',
+    flexGrow: 1,
+  },
+  heading: {
+    flexGrow: 1,
   },
   appBar: {
     transition: theme.transitions.create(['margin', 'width'], {
@@ -128,7 +131,7 @@ const Navbar = () => {
           <Typography variant="h6" noWrap className={classes.heading}>
             Welcome to your Dashboard!
           </Typography>
-            <Button>Charts</Button>
+            <Button onClick = {() => history.push('/dashboard/charts')}>Charts</Button>
         </Toolbar>
         
       </AppBar>
