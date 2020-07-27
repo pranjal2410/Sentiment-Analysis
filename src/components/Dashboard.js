@@ -1,8 +1,9 @@
 import React from 'react';
 import SimpleTable from './Table';
 import clsx from 'clsx';
+import { Link } from 'react-router-dom';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
-import { Drawer, CssBaseline, AppBar, Toolbar, List, Typography, Divider, IconButton, ListItem, ListItemIcon, ListItemText } from '@material-ui/core';
+import { Drawer, CssBaseline, AppBar, Toolbar, Typography, Divider, IconButton, Button, Grid } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
@@ -127,7 +128,12 @@ const Dashboard = () => {
           <Typography variant="h6" noWrap className={classes.heading}>
             Welcome to your Dashboard!
           </Typography>
+          <Grid 
+          justify="flex-end">
+            <Button href='/charts'>Charts</Button>
+          </Grid>
         </Toolbar>
+        
       </AppBar>
       <Drawer
         className={classes.drawer}

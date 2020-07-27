@@ -4,9 +4,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Container, Typography, Grid } from '@material-ui/core';
 import CircularProgress from '@material-ui/core/CircularProgress';
 
-
-let cntr = -34;
-
 const useStyles = makeStyles({
   table: {
     minWidth: 650,
@@ -88,7 +85,7 @@ const SimpleTable = () => {
           Cases updated on {time.slice(0,10)} at {time.slice(11,19)} IST 
         </Typography>
         <Grid container spacing={3} style={{paddingBottom:'40px'}}>
-          <Grid item xs={6}>
+          <Grid item xs={12} sm={6}>
             <Paper elevation={3} style={{paddingLeft:'2px', paddingRight:'2px'}}>
               <Typography className={classes.paperNumber}>
                 {latest.total}
@@ -98,7 +95,7 @@ const SimpleTable = () => {
               </Typography>
             </Paper>
           </Grid>
-          <Grid item xs={6}>
+          <Grid item xs={12} sm={6}>
           <Paper elevation={3} style={{paddingLeft:'2px', paddingRight:'2px'}}>
               <Typography className={classes.paperNumber}>
                 {latest.confirmedCasesIndian}
@@ -108,7 +105,7 @@ const SimpleTable = () => {
               </Typography>
             </Paper>
           </Grid>
-          <Grid item xs={6}>
+          <Grid item xs={12} sm={6}>
           <Paper elevation={3} style={{paddingLeft:'2px', paddingRight:'2px'}}>
               <Typography className={classes.paperNumber}>
                 {latest.confirmedCasesForeign}
@@ -118,7 +115,7 @@ const SimpleTable = () => {
               </Typography>
             </Paper>
           </Grid>
-          <Grid item xs={6}>
+          <Grid item xs={12} sm={6}>
           <Paper elevation={3} style={{paddingLeft:'2px', paddingRight:'2px'}}>
               <Typography className={classes.paperNumber}>
                 {latest.discharged}
@@ -128,7 +125,7 @@ const SimpleTable = () => {
               </Typography>
             </Paper>
           </Grid>
-          <Grid item xs={6}>
+          <Grid item xs={12} sm={6}>
           <Paper elevation={3} style={{paddingLeft:'2px', paddingRight:'2px'}}>
               <Typography className={classes.paperNumber}>
                 {latest.deaths}
@@ -138,7 +135,7 @@ const SimpleTable = () => {
               </Typography>
             </Paper>
           </Grid>
-          <Grid item xs={6}>
+          <Grid item xs={12} sm={6}>
           <Paper elevation={3} style={{paddingLeft:'2px', paddingRight:'2px'}}>
               <Typography className={classes.paperNumber}>
                 {latest.confirmedButLocationUnidentified}
@@ -172,10 +169,10 @@ const SimpleTable = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {rows.map((row) => {
+              {rows.map((row, index) => {
                 return (
-                <TableRow key={Math.random()}>
-                  <TableCell align="center">{cntr++}</TableCell>
+                <TableRow key={index}>
+                  <TableCell align="center">{index+1}</TableCell>
                   <TableCell align="center">{row.loc}</TableCell>
                   <TableCell align="center">{row.confirmedCasesIndian}</TableCell>
                   <TableCell align="center">{row.confirmedCasesForeign}</TableCell>
