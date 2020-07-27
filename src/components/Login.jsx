@@ -97,7 +97,7 @@ const Login = () => {
                         >
                         Log In
                         </Button>
-                        <Link to="/" variant="body2" className={classes.link}>
+                        <Link to="/signup" variant="body2" className={classes.link}>
                             {"Don't have an account? Sign Up"}
                         </Link>
                     </form>    

@@ -9,9 +9,9 @@ import Navbar from './components/Navbar';
 
 const App = () => {
   return (
-    <div className='root'>'
+    <div className='main'>      
       <BrowserRouter>
-        <Switch>
+        <Switch>     
             <Route exact path='/' component={Login} />
             <Route path='/signup' component={Signup} />
             <Route 

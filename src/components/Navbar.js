@@ -1,7 +1,7 @@
 import React from 'react';
 import clsx from 'clsx';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
-import { Drawer, CssBaseline, AppBar, Toolbar, Typography, Divider, IconButton, Button, Grid } from '@material-ui/core';
+import { Drawer, CssBaseline, AppBar, Toolbar, Typography, Divider, IconButton, Button } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
@@ -131,7 +131,8 @@ const Navbar = () => {
           <Typography variant="h6" noWrap className={classes.heading}>
             Welcome to your Dashboard!
           </Typography>
-            <Button onClick = {() => history.push('/dashboard/charts')}>Charts</Button>
+            <Button style={{ color:'#fff' }} onClick = {() => history.push('/dashboard')}>Dashboard</Button>
+            <Button style={{ color:'#fff' }} onClick = {() => history.push('/dashboard/charts')}>Charts</Button>
         </Toolbar>
         
       </AppBar>

@@ -4,9 +4,9 @@ import { LockOutlined, Twitter } from '@material-ui/icons';
 import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
-    // cont : {
-    //     paddingTop: '15%'
-    // },
+    cont : {
+        paddingTop: '15%'
+    },
     twitter : {
         color: '#1dadf2',
         fontSize: '70px',
@@ -146,7 +146,7 @@ const Signup = () => {
                     </Button>
                     <Grid container className={classes.grid}>
                         <Grid item className={classes.grid}>
-                        <Link to="/login" variant="body2" className={classes.link}>
+                        <Link to="/" variant="body2" className={classes.link}>
                             Already have an account? Log in
                         </Link>
                         </Grid>
