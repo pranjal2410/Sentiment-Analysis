@@ -93,7 +93,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const Navbar = () => {
-    const history = useHistory();
     const classes = useStyles();
     const theme = useTheme();
     const [open, setOpen] = React.useState(false);
@@ -105,11 +104,6 @@ const Navbar = () => {
     const handleDrawerClose = () => {
       setOpen(false);
     };
-
-    const handleCharts = () => {
-        console.log(history);
-       history.push('/charts');
-    }
 
     return(
     <div className={classes.root}>
@@ -133,7 +127,7 @@ const Navbar = () => {
           <Typography variant="h6" noWrap className={classes.heading}>
             Welcome to your Dashboard!
           </Typography>
-            <Button onClick={handleCharts}>Charts</Button>
+            <Button href='/charts'>Charts</Button>
         </Toolbar>
         
       </AppBar>
