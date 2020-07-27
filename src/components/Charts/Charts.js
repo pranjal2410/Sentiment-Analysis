@@ -18,9 +18,13 @@ const Charts = () => {
     const dummy = null;
     const classes = useStyles();
     const [spinner, setSpinner] = useState(true);
-    const [state,setState] = useState(true);
+    const [state,setState] = useState({ 
+                                switch1: true, 
+                                switch2: true
+                            });
     const [location, setLocation] = useState([]);
     const [totalConfirmed, setTotalConfirmed] = useState([]);
+    const [deaths, setDeaths] = useState([]);
 
     const fetchCases = () => {
         axios({
@@ -34,15 +38,17 @@ const Charts = () => {
             setTimeout(() => setSpinner(false), 1000);
             const labels = response.data.data.regional;
             setLocation(labels.map(label => label.loc));
-            setTotalConfirmed(labels.map(label => label.totalConfirmed))
+            setTotalConfirmed(labels.map(label => label.totalConfirmed));
+            setDeaths(labels.map(label => label.deaths))
         })
     }
     useEffect(() => {
         fetchCases()
     },[dummy]);
 
-    const handleChange = (event) => {
-        setState(!state);
+    const handleSwitch1 = () => {   
+    }
+    const handleSwitch2 = () => {
     }
 
     return (
@@ -57,11 +63,24 @@ const Charts = () => {
                 ):(
                     <Container>  
                         {
-                            state ? <BarGraph location={location} totalConfirmed={totalConfirmed}/> : <DoughNut location={location} totalConfirmed={totalConfirmed}/>
+                            state.switch1 ? 
+                                <BarGraph location={location} data={totalConfirmed} label='Confirmed Cases'/> : 
+                                <DoughNut location={location} data={totalConfirmed} label='Confirmed Cases'/>
                         }
                         <FormGroup row style={{margin:'auto'}}>
                         <FormControlLabel
-                            control={<Switch onChange={handleChange}/>}
+                            control={<Switch onChange={handleSwitch1}/>}
+                            label="Switch Graph Type"
+                         />
+                        </FormGroup>
+                        {
+                            state.switch2 ? 
+                                <BarGraph location={location} data={deaths} label='Deaths'/> : 
+                                <DoughNut location={location} data={deaths} label='Deaths'/>
+                        }
+                        <FormGroup row style={{margin:'auto'}}>
+                        <FormControlLabel
+                            control={<Switch onChange={handleSwitch2}/>}
                             label="Switch Graph Type"
                          />
                         </FormGroup>

@@ -11,8 +11,8 @@ const BarGraph = (props) => {
                 labels:props.location,
                 datasets:[
                     {
-                        label:'Confirmed Cases',
-                        data: props.totalConfirmed,
+                        label: props.label,
+                        data: props.data,
                         backgroundColor: color,
                         borderColor: color,
                         borderWidth: 2,
@@ -26,7 +26,8 @@ const BarGraph = (props) => {
                 legend:{
                     display:true,
                     position:'right'
-                }
+                },
+                maintainAspectRatio: true
             }}
         />
     );
