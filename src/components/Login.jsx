@@ -8,15 +8,14 @@ const useStyles = makeStyles((theme) => ({
         paddingTop: '15%'
     },
     twitter : {
-        color: 'white',
+        color: '#1dadf2',
         fontSize: '70px',
         paddingLeft: '43%',
         paddingBottom: '2%'
     },
     welcome : {
-        color:'white',
         fontSize: '31px',
-        paddingBottom: '15%'                    
+        // paddingBottom: '15%'                    
     },
     heading : {
         paddingTop: '10px'

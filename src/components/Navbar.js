@@ -96,6 +96,7 @@ const Navbar = () => {
     const classes = useStyles();
     const theme = useTheme();
     const [open, setOpen] = React.useState(false);
+    const history = useHistory();
   
     const handleDrawerOpen = () => {
       setOpen(true);
@@ -127,7 +128,7 @@ const Navbar = () => {
           <Typography variant="h6" noWrap className={classes.heading}>
             Welcome to your Dashboard!
           </Typography>
-            <Button href='/charts'>Charts</Button>
+            <Button>Charts</Button>
         </Toolbar>
         
       </AppBar>

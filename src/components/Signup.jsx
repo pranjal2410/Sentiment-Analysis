@@ -4,19 +4,17 @@ import { LockOutlined, Twitter } from '@material-ui/icons';
 import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
-    cont : {
-        paddingTop: '15%'
-    },
+    // cont : {
+    //     paddingTop: '15%'
+    // },
     twitter : {
-        color: 'white',
+        color: '#1dadf2',
         fontSize: '70px',
         paddingLeft: '43%',
         paddingBottom: '2%'
     },
     welcome : {
-        color:'white',
-        fontSize: '36px',
-        paddingBottom: '13%'                    
+        fontSize: '36px',                  
     }, 
     heading : {
         paddingTop: '10px'

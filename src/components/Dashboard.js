@@ -74,7 +74,7 @@ const SimpleTable = () => {
     (
       <div className={classes.loading}>
         <CircularProgress />
-        <Typography variant="h6">Loading you data..</Typography>
+        <Typography variant="h6">Loading your data..</Typography>
       </div>
     ):(
       <div>

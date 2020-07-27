@@ -10,13 +10,24 @@ import Navbar from './components/Navbar';
 const App = () => {
   return (
     <div className='root'>'
-      <Navbar />
       <BrowserRouter>
         <Switch>
-            <Route exact path='/' component={Dashboard} />
-            <Route path='/charts' component={Charts} />
-            {/* <Route exact path='/' component={Signup} />
-            <Route path='/login' component={Login} /> */}
+            <Route exact path='/' component={Login} />
+            <Route path='/signup' component={Signup} />
+            <Route 
+              path='/dashboard' 
+              component={() => {
+                return(
+                  <>
+                    <Navbar/>
+                    <Switch>
+                      <Route exact path='/dashboard' component={Dashboard}/>
+                      <Route path='/dashboard/charts' component={Charts}/>
+                    </Switch>
+                  </>
+                );
+              }}
+            />
         </Switch>
       </BrowserRouter> 
     </div>

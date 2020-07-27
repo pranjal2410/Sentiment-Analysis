@@ -2,8 +2,9 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Typography, CircularProgress, Container, FormGroup, FormControlLabel, Switch } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
-import BarGraph from './BarGraph';
-import PieChart from './PieChart';
+import { Bar, Doughnut } from 'react-chartjs-2';
+
+const color = ['rgba(255, 99, 132, 0.8)','rgba(54, 162, 235, 0.8)','rgba(255, 206, 86, 0.8)','rgba(75, 192, 192, 0.8)','rgba(153, 102, 255, 0.8)','rgba(255, 159, 64, 0.8)','rgba(255, 99, 132, 0.8)','rgba(54, 162, 235, 0.8)','rgba(255, 206, 86, 0.8)','rgba(75, 192, 192, 0.8)','rgba(153, 102, 255, 0.8)','rgba(255, 159, 64, 0.8)','rgba(255, 99, 132, 0.8)','rgba(54, 162, 235, 0.8)','rgba(255, 206, 86, 0.8)','rgba(75, 192, 192, 0.8)','rgba(153, 102, 255, 0.8)','rgba(255, 159, 64, 0.8)','rgba(255, 99, 132, 0.8)','rgba(54, 162, 235, 0.8)','rgba(255, 206, 86, 0.8)','rgba(75, 192, 192, 0.8)','rgba(153, 102, 255, 0.8)','rgba(255, 159, 64, 0.8)','rgba(255, 99, 132, 0.8)','rgba(54, 162, 235, 0.8)','rgba(255, 206, 86, 0.8)','rgba(75, 192, 192, 0.8)','rgba(153, 102, 255, 0.8)','rgba(255, 159, 64, 0.8)','rgba(255, 99, 132, 0.8)','rgba(54, 162, 235, 0.8)','rgba(255, 206, 86, 0.8)','rgba(255, 99, 132, 0.8)','rgba(54, 162, 235, 0.8)','rgba(255, 206, 86, 0.8)','rgba(75, 192, 192, 0.8)',]
 
 const useStyles = makeStyles({
     loading : {
@@ -17,7 +18,7 @@ const useStyles = makeStyles({
 const Charts = () => {
     const dummy = null;
     const classes = useStyles();
-    const [labels, setLabels] = useState([]);
+    const [chartProps, setChartProps] = useState({});
     const [spinner, setSpinner] = useState(true);
     const [state,setState] = useState(true);
 
@@ -31,7 +32,36 @@ const Charts = () => {
         })
         .then(response => {
             setTimeout(() => setSpinner(false), 1000);
-            setLabels(response.data.data.regional);
+            const labels = response.data.data.regional;
+            setChartProps({
+                data: {
+                    labels: labels.map( label => label.loc),
+                    datasets:[
+                        {
+                            label:'Confirmed Cases',
+                            data: labels.map( label => label.totalConfirmed),
+                            backgroundColor: color,
+                            borderColor: color,
+                            borderWidth: 2,
+                            hoverBorderWidth:2,
+                            hoverBorderColor:'#000'
+    
+                        }
+                    ],
+                }, 
+                options: {
+                    title:{
+                        display:true,
+                        text: 'Statewise graph of COVID-19 confirmed cases',
+                        fontSize:26
+                    },
+                    legend:{
+                        display:true,
+                        position:'right'
+                    }
+                }
+            });
+
         })
     }
     useEffect(() => {
@@ -49,7 +79,7 @@ const Charts = () => {
                 (
                     <div className={classes.loading}>
                         <CircularProgress />
-                        <Typography variant="h6">Loading you data..</Typography>
+                        <Typography variant="h6">Loading your data..</Typography>
                     </div>
                 ):(
                     <Container>
@@ -59,8 +89,8 @@ const Charts = () => {
                             label="Switch Graph Type"
                          />
                         </FormGroup>
-                        { state ? 
-                            (<BarGraph labels={labels} />) : (<PieChart labels={labels}/>)
+                        {
+                            state ? <Bar {...chartProps}/> : <Doughnut {...chartProps}/>
                         }
                     </Container>
                 )
