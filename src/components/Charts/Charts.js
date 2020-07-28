@@ -18,7 +18,7 @@ const Charts = () => {
     const dummy = null;
     const classes = useStyles();
     const [spinner, setSpinner] = useState(true);
-    const [state,setState] = useState({ 
+    const [toggle,setToggle] = useState({ 
                                 switch1: true, 
                                 switch2: true
                             });
@@ -47,6 +47,8 @@ const Charts = () => {
     },[dummy]);
 
     const handleSwitch1 = () => {   
+        
+        
     }
     const handleSwitch2 = () => {
     }
@@ -63,22 +65,22 @@ const Charts = () => {
                 ):(
                     <Container>  
                         {
-                            state.switch1 ? 
+                             toggle.switch1 ? 
                                 <BarGraph location={location} data={totalConfirmed} label='Confirmed Cases'/> : 
                                 <DoughNut location={location} data={totalConfirmed} label='Confirmed Cases'/>
                         }
-                        <FormGroup row style={{margin:'auto'}}>
+                        <FormGroup row>
                         <FormControlLabel
                             control={<Switch onChange={handleSwitch1}/>}
                             label="Switch Graph Type"
                          />
                         </FormGroup>
                         {
-                            state.switch2 ? 
+                            toggle.switch2 ? 
                                 <BarGraph location={location} data={deaths} label='Deaths'/> : 
                                 <DoughNut location={location} data={deaths} label='Deaths'/>
                         }
-                        <FormGroup row style={{margin:'auto'}}>
+                        <FormGroup row >
                         <FormControlLabel
                             control={<Switch onChange={handleSwitch2}/>}
                             label="Switch Graph Type"
