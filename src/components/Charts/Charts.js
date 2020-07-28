@@ -2,8 +2,9 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Typography, CircularProgress, Container, FormGroup, FormControlLabel, Switch } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
-import BarGraph from './BarGraph';
-import DoughNut from './DoughNut';
+import { Bar, Doughnut } from 'react-chartjs-2';
+
+const color = ['rgba(255, 99, 132, 0.8)','rgba(54, 162, 235, 0.8)','rgba(255, 206, 86, 0.8)','rgba(75, 192, 192, 0.8)','rgba(153, 102, 255, 0.8)','rgba(255, 159, 64, 0.8)','rgba(255, 99, 132, 0.8)','rgba(54, 162, 235, 0.8)','rgba(255, 206, 86, 0.8)','rgba(75, 192, 192, 0.8)','rgba(153, 102, 255, 0.8)','rgba(255, 159, 64, 0.8)','rgba(255, 99, 132, 0.8)','rgba(54, 162, 235, 0.8)','rgba(255, 206, 86, 0.8)','rgba(75, 192, 192, 0.8)','rgba(153, 102, 255, 0.8)','rgba(255, 159, 64, 0.8)','rgba(255, 99, 132, 0.8)','rgba(54, 162, 235, 0.8)','rgba(255, 206, 86, 0.8)','rgba(75, 192, 192, 0.8)','rgba(153, 102, 255, 0.8)','rgba(255, 159, 64, 0.8)','rgba(255, 99, 132, 0.8)','rgba(54, 162, 235, 0.8)','rgba(255, 206, 86, 0.8)','rgba(75, 192, 192, 0.8)','rgba(153, 102, 255, 0.8)','rgba(255, 159, 64, 0.8)','rgba(255, 99, 132, 0.8)','rgba(54, 162, 235, 0.8)','rgba(255, 206, 86, 0.8)','rgba(255, 99, 132, 0.8)','rgba(54, 162, 235, 0.8)','rgba(255, 206, 86, 0.8)','rgba(75, 192, 192, 0.8)',]
 
 const useStyles = makeStyles({
     loading : {
@@ -47,12 +48,39 @@ const Charts = () => {
     },[dummy]);
 
     const handleSwitch = (event) => {   
-        if(event.currentTarget.id == 'swtich1') {
+        if(event.currentTarget.id === 'switch1') {
             setToggle({...toggle, switch1: !toggle.switch1})
         }
-        if(event.currentTarget.id == 'switch2') {
+        if(event.currentTarget.id === 'switch2') {
             setToggle({...toggle, switch2:!toggle.switch2})
         } 
+    }
+
+    const generateChart = (loc, data, label) => {
+        return({
+            data: {
+                labels:loc,
+                datasets:[
+                    {
+                        label: label,
+                        data: data,
+                        backgroundColor: color,
+                        borderColor: color,
+                        borderWidth: 2,
+                        hoverBorderWidth:2,
+                        hoverBorderColor:'#000'
+
+                    }
+                ],
+            },
+            options: {
+                legend:{
+                    display:true,
+                    position:'right'
+                },
+                maintainAspectRatio: true
+            }
+        });
     }
     
     return (
@@ -67,20 +95,20 @@ const Charts = () => {
                 ):(
                     <Container>  
                         {
-                             toggle.switch1 ? 
-                                <BarGraph location={location} data={totalConfirmed} label='Confirmed Cases'/> : 
-                                <DoughNut location={location} data={totalConfirmed} label='Confirmed Cases'/>
+                            toggle.switch1 ?
+                            <Bar {...generateChart(location, totalConfirmed, "Confirmed Cases")}/> :
+                            <Doughnut {...generateChart(location, totalConfirmed, "Confirmed Cases")}/>
                         }
                         <FormGroup row>
                         <FormControlLabel
-                            control={<Switch onChange={handleSwitch} id="swtich1" />}
+                            control={<Switch onChange={handleSwitch} id="switch1" />}
                             label="Switch Graph Type"
                          />
                         </FormGroup>
                         {
                             toggle.switch2 ? 
-                                <BarGraph location={location} data={deaths} label='Deaths'/> : 
-                                <DoughNut location={location} data={deaths} label='Deaths'/>
+                            <Bar {...generateChart(location, deaths, "Deaths")} /> : 
+                            <Doughnut {...generateChart(location, deaths, "Deaths")}/>
                         }
                         <FormGroup row >
                         <FormControlLabel
