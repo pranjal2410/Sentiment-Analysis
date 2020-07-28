@@ -46,13 +46,15 @@ const Charts = () => {
         fetchCases()
     },[dummy]);
 
-    const handleSwitch1 = () => {   
-        
-        
+    const handleSwitch = (event) => {   
+        if(event.currentTarget.id == 'swtich1') {
+            setToggle({...toggle, switch1: !toggle.switch1})
+        }
+        if(event.currentTarget.id == 'switch2') {
+            setToggle({...toggle, switch2:!toggle.switch2})
+        } 
     }
-    const handleSwitch2 = () => {
-    }
-
+    
     return (
         <div className="charts">
             {
@@ -71,7 +73,7 @@ const Charts = () => {
                         }
                         <FormGroup row>
                         <FormControlLabel
-                            control={<Switch onChange={handleSwitch1}/>}
+                            control={<Switch onChange={handleSwitch} id="swtich1" />}
                             label="Switch Graph Type"
                          />
                         </FormGroup>
@@ -82,7 +84,7 @@ const Charts = () => {
                         }
                         <FormGroup row >
                         <FormControlLabel
-                            control={<Switch onChange={handleSwitch2}/>}
+                            control={<Switch onChange={handleSwitch} id="switch2"/>}
                             label="Switch Graph Type"
                          />
                         </FormGroup>

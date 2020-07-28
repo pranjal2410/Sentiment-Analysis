@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Container, Typography, makeStyles, Paper, TextField, Button, Avatar } from '@material-ui/core';
 import { LockOpen, Twitter } from '@material-ui/icons';
 import { Link } from 'react-router-dom';
@@ -49,6 +49,22 @@ const useStyles = makeStyles((theme) => ({
 
 const Login = () => {
     const classes = useStyles();
+    const [values,setValues] = useState({
+        email: '',
+        password: ''
+    })
+
+    const handleChange = (event) => {
+        setValues({...values, [event.currentTarget.id]: event.currentTarget.value})
+    }
+
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        
+        console.log(values);
+        
+    }
+
     return (
         <Container component="main" maxWidth="sm">
             <div className={classes.cont}>
@@ -65,35 +81,34 @@ const Login = () => {
                             LOG IN
                         </Typography>
                     </div>
-                    <form className={classes.form}>
+                    <form className={classes.form} onSubmit={handleSubmit}>
                         <TextField
-                        variant="outlined"
-                        margin="normal"
-                        fullWidth
-                        required
-                        id="username"
-                        label="Username"
-                        name="username"
-                        autoComplete="Uuername"
-                        autoFocus
+                            variant="outlined"
+                            margin="normal"
+                            id="email"
+                            label="Email"
+                            type="email"
+                            autoComplete="Email"
+                            onChange={handleChange}
+                            fullWidth required autoFocus
                         />
                         <TextField
-                        variant="outlined"
-                        margin="normal"
-                        required
-                        fullWidth
-                        name="password"
-                        label="Password"
-                        type="password"
-                        id="password"
-                        autoComplete="password"
+                            variant="outlined"
+                            margin="normal"
+                            required
+                            fullWidth
+                            label="Password"
+                            type="password"
+                            id="password"
+                            onChange={handleChange}
+                            autoComplete="password"
                         />
                         <Button
-                        type="submit"
-                        variant="contained"
-                        color="primary"
-                        fullWidth
-                        className={classes.submit}
+                            type="submit"
+                            variant="contained"
+                            color="primary"
+                            fullWidth
+                            className={classes.submit}
                         >
                         Log In
                         </Button>
