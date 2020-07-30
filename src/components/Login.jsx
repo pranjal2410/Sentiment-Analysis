@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { Container, Typography, makeStyles, Paper, TextField, Button, Avatar } from '@material-ui/core';
-import { LockOpen, Twitter } from '@material-ui/icons';
+import axios from 'axios';
+import { Container, Typography, makeStyles, Paper, TextField, Button, Avatar, IconButton } from '@material-ui/core';
+import { LockOpen, Twitter, Visibility, VisibilityOff } from '@material-ui/icons';
 import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
@@ -51,18 +52,51 @@ const Login = () => {
     const classes = useStyles();
     const [values,setValues] = useState({
         email: '',
-        password: ''
-    })
+        password: '',
+        showPassword : false,
+    });
+    const [emailerror, setEmailError] = useState(false);
+    const [passworderror, setPasswordError] = useState(false);
+    const [loginerror, setLoginError] = useState(false);
+
 
     const handleChange = (event) => {
         setValues({...values, [event.currentTarget.id]: event.currentTarget.value})
+        if(event.currentTarget.id === 'email') {
+            setEmailError(!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(event.currentTarget.value));
+        }
+        if(event.currentTarget.id === 'password') {
+            setPasswordError(event.currentTarget.value.length ? false : true);
+        }
     }
 
     const handleSubmit = (event) => {
         event.preventDefault();
+        if(!values.email.length)
+			setEmailError(true);
+		if(!values.password.length)
+            setPasswordError(true);
         
-        console.log(values);
-        
+        axios({
+            method:'post',
+            headers : {
+                'Content-Type':'application/json'
+            },
+            data : {
+                email : values.email,
+                password : values.password
+            },
+            url: '/api/login',
+        })
+        .then(response => {
+            let date = new Date();
+            date.setTime(date.getTime() +  180 * 60 * 1000);     // 180 minutes
+            let expiration = `expires ${date.toUTCString()}`;
+            document.cookie = `usertoken = ${response.data.token}; ${expiration} ;path=/`; 
+        })
+        .catch(error => {
+            setLoginError(true);
+        })
     }
 
     return (
@@ -83,6 +117,7 @@ const Login = () => {
                     </div>
                     <form className={classes.form} onSubmit={handleSubmit}>
                         <TextField
+                            error={emailerror}
                             variant="outlined"
                             margin="normal"
                             id="email"
@@ -90,18 +125,29 @@ const Login = () => {
                             type="email"
                             autoComplete="Email"
                             onChange={handleChange}
+                            helperText= { emailerror ? (values.email.length ? "Invalid Email Address" : "Required!") : null}
                             fullWidth required autoFocus
                         />
                         <TextField
+                            error={passworderror || loginerror}
                             variant="outlined"
                             margin="normal"
-                            required
-                            fullWidth
                             label="Password"
-                            type="password"
                             id="password"
+                            type = { values.showPassword ? 'text': 'password'}
                             onChange={handleChange}
-                            autoComplete="password"
+                            helperText = { passworderror ? "Required!" : loginerror ? "Invalid Credentials" : null}
+                            InputProps = {{
+                                endAdornment: 
+                                    <IconButton 
+                                        aria-label= "toggle password visibility" 
+                                        onClick={() => setValues({...values, showPassword:  !values.showPassword})}
+                                    >
+                                        { values.showPassword ? <Visibility/ > : <VisibilityOff />}
+                                    </IconButton>
+
+                            }}
+                            required fullWidth            
                         />
                         <Button
                             type="submit"
