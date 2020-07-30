@@ -66,37 +66,34 @@ const Login = () => {
             setEmailError(!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(event.currentTarget.value));
         }
         if(event.currentTarget.id === 'password') {
-            setPasswordError(event.currentTarget.value.length ? false : true);
+            setPasswordError(event.target.value === '');
         }
     }
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        if(!values.email.length)
-			setEmailError(true);
-		if(!values.password.length)
-            setPasswordError(true);
-        
-        axios({
-            method:'post',
-            headers : {
-                'Content-Type':'application/json'
-            },
-            data : {
-                email : values.email,
-                password : values.password
-            },
-            url: '/api/login',
-        })
-        .then(response => {
-            let date = new Date();
-            date.setTime(date.getTime() +  180 * 60 * 1000);     // 180 minutes
-            let expiration = `expires ${date.toUTCString()}`;
-            document.cookie = `usertoken = ${response.data.token}; ${expiration} ;path=/`; 
-        })
-        .catch(error => {
-            setLoginError(true);
-        })
+        if(!emailerror && !passworderror) {
+            axios({
+                method:'post',
+                headers : {
+                    'Content-Type':'application/json'
+                },
+                data : {
+                    email : values.email,
+                    password : values.password
+                },
+                url: '/api/login',
+            })
+            .then(response => {
+                let date = new Date();
+                date.setTime(date.getTime() +  180 * 60 * 1000);     // 180 minutes
+                let expiration = `expires ${date.toUTCString()}`;
+                document.cookie = `usertoken = ${response.data.token}; ${expiration} ;path=/`; 
+            })
+            .catch(error => {
+                setLoginError(true);
+            })
+        }
     }
 
     return (
