@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import axios from 'axios';
 import { Container ,Grid, Typography, makeStyles, Paper, TextField, Button, Avatar, FormControlLabel, Checkbox, IconButton } from '@material-ui/core';
 import { LockOutlined, Twitter, Visibility, VisibilityOff } from '@material-ui/icons';
@@ -43,7 +44,7 @@ const useStyles = makeStyles((theme) => ({
 
 const Signup = () => {
     const classes = useStyles();
-
+    let history = useHistory();
     const [values, setValues] = useState({
         fname: '',
         lname: '',
@@ -65,12 +66,12 @@ const Signup = () => {
     const [signuperror, setSignupError] = useState(false);
 
     const handleChange = (event) => {
-        setValues({...values, [event.target.name]: event.target.value})
+        setValues({...values, [event.target.id]: event.target.value})
         setSignupError(false);
-        if(values.currentTarget.id === 'fname') {
+        if(event.currentTarget.id === 'fname') {
             setFNameError(event.target.value === '');
         }
-        if(values.currentTarget.id === 'lname') {
+        if(event.currentTarget.id === 'lname') {
             setLNameError(event.target.value === '');
         }
         if(event.currentTarget.id === 'email') {
@@ -81,15 +82,15 @@ const Signup = () => {
             setPasswordError(!strongRegex.test(event.target.value));
         }
         if(event.currentTarget.id === 'confirm') {
-            setConfirmError(values.password !== event.password.value);
+            setConfirmError(values.password !== event.target.value);
         }
-        if(values.currentTarget.id === 'city') {
+        if(event.currentTarget.id === 'city') {
             setCityError(event.target.value === '');
         }
-        if(values.currentTarget.id === 'state') {
+        if(event.currentTarget.id === 'state') {
             setStateError(event.target.value === '');
         }
-        if(values.currentTarget.id === 'twitter') {
+        if(event.currentTarget.id === 'twitter') {
             setValues({...values, twitter: !values.twitter})
         }
     }
@@ -119,8 +120,9 @@ const Signup = () => {
                 let expiration = `expires ${date.toUTCString()}`;
                 document.cookie = `usertoken = ${response.data.token}; ${expiration} ;path=/`; 
                 setSignupError(false);
+                history.push('/dashboard');
             })
-            .catch(error => {
+            .catch(() => {
                 setSignupError(true);
             })
         }
@@ -145,31 +147,34 @@ const Signup = () => {
                     <Grid container spacing={2}>
                         <Grid item xs={12} sm={6}>
                             <TextField
-                                name="firstName"
-                                id="fname"
-                                variant="outlined"
-                                label="First Name"
-                                onChange={handleChange}
                                 error={fnameerror}
+                                variant="outlined"
+                                margin="normal"
+                                id="fname"
+                                label="First Name"
+                                type="text"
+                                autoComplete="First Name"
+                                onChange={handleChange}
                                 helperText={fnameerror ? "This is a required field!" : null}
                                 autoFocus required fullWidth
                             />
                         </Grid>
                         <Grid item xs={12} sm={6}>
                             <TextField
-                                name="lastName"
-                                id="lastName"
-                                variant="outlined"
-                                label="Last Name"
-                                onChange={handleChange}
                                 error={lnameerror}
-                                helperText={lnameerror ? "This is a required field!": null}
+                                variant="outlined"
+                                margin="normal"
+                                id="lname"
+                                label="Last Name"
+                                type="text"
+                                autoComplete="Last Name"
+                                onChange={handleChange}
+                                helperText={lnameerror ? "This is a required field!" : null}
                                 autoFocus required fullWidth
                             />
                         </Grid>
                         <Grid item xs={12}>
                             <TextField
-                                name="email"
                                 id="email"
                                 variant="outlined"
                                 label="Email Address"
@@ -182,7 +187,6 @@ const Signup = () => {
                         <Grid item xs={12}>
                             <TextField
                                 variant="outlined"
-                                name="password"
                                 label="Password"
                                 type = { values.showPassword ? 'text': 'password'}
                                 id="password"
@@ -207,7 +211,6 @@ const Signup = () => {
                         <Grid item xs={12}>
                             <TextField
                                 variant="outlined"
-                                name="confirm"
                                 label="Confirm Password"
                                 type = { values.showPassword ? 'text': 'password'}
                                 id="confirm"
@@ -231,7 +234,6 @@ const Signup = () => {
                         </Grid>
                         <Grid item xs={12} sm={5}>
                             <TextField
-                                name="city"
                                 id="city"
                                 variant="outlined"
                                 label="Enter city name"
@@ -243,7 +245,6 @@ const Signup = () => {
                         </Grid> 
                         <Grid item xs={12} sm={7}>
                             <TextField
-                                name="state"
                                 id="state"
                                 variant="outlined"
                                 label="Enter state name"

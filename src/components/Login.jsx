@@ -122,7 +122,7 @@ const Login = () => {
                             type="email"
                             autoComplete="Email"
                             onChange={handleChange}
-                            helperText= { emailerror ? (values.email.length ? "Invalid Email Address" : "Required!") : null}
+                            helperText= { emailerror ? (values.email.length ? "Invalid Email Address" : "This is a required field!") : null}
                             fullWidth required autoFocus
                         />
                         <TextField
@@ -133,7 +133,7 @@ const Login = () => {
                             id="password"
                             type = { values.showPassword ? 'text': 'password'}
                             onChange={handleChange}
-                            helperText = { passworderror ? "Required!" : loginerror ? "Invalid Credentials" : null}
+                            helperText = { passworderror ? "This is a required field!" : loginerror ? "Invalid Credentials" : null}
                             InputProps = {{
                                 endAdornment: 
                                     <IconButton 
