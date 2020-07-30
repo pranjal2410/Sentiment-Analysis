@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import { Container, Typography, makeStyles, Paper, TextField, Button, Avatar, IconButton } from '@material-ui/core';
 import { LockOpen, Twitter, Visibility, VisibilityOff } from '@material-ui/icons';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
     cont : {
@@ -50,6 +50,7 @@ const useStyles = makeStyles((theme) => ({
 
 const Login = () => {
     const classes = useStyles();
+    let history = useHistory();
     const [values,setValues] = useState({
         email: '',
         password: '',
@@ -89,6 +90,8 @@ const Login = () => {
                 date.setTime(date.getTime() +  180 * 60 * 1000);     // 180 minutes
                 let expiration = `expires ${date.toUTCString()}`;
                 document.cookie = `usertoken = ${response.data.token}; ${expiration} ;path=/`; 
+                setLoginError(false);
+                history.push('/dashboard');
             })
             .catch(error => {
                 setLoginError(true);
