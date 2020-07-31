@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import clsx from 'clsx';
+import jwt_decode from 'jwt-decode';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import { Drawer, CssBaseline, AppBar, Toolbar, Typography, Divider, IconButton, Button, List } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
@@ -128,6 +129,10 @@ const Navbar = () => {
     }
 
     useEffect(() => {
+        let token = decodeURIComponent(document.cookie.split('=')[1]);
+        let data= jwt_decode(token);
+        console.log(data);
+
         setData({
           name: 'Tanmay Pardeshi',
           email : 'abc@gmail.com',

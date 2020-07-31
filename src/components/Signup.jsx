@@ -129,7 +129,7 @@ const Signup = () => {
         }
     }
     useEffect(() => {
-        let token = "";
+        let token = document.cookie.split('=')[1];
         if(token !== '') {
             history.push('/dashboard')
         } 
