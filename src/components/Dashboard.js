@@ -60,7 +60,7 @@ const SimpleTable = () => {
       setRows(response.data.data.regional);
       setTime(response.data.lastRefreshed);
     })
-    .catch((err) => window.alert(err));
+    .catch(() => window.alert("Please Check you internet connection!"));
   }
 
   useEffect(() => { 

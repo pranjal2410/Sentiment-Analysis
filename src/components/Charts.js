@@ -42,6 +42,7 @@ const Charts = () => {
             setTotalConfirmed(labels.map(label => label.totalConfirmed));
             setDeaths(labels.map(label => label.deaths))
         })
+        .catch(() => window.alert("Please Check you internet connection!"))
     }
     useEffect(() => {
         fetchCases()

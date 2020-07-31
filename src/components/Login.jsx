@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Container, Typography, makeStyles, Paper, TextField, Button, Avatar, IconButton } from '@material-ui/core';
 import { LockOpen, Twitter, Visibility, VisibilityOff } from '@material-ui/icons';
@@ -60,7 +60,6 @@ const Login = () => {
     const [passworderror, setPasswordError] = useState(false);
     const [loginerror, setLoginError] = useState(false);
 
-
     const handleChange = (event) => {
         setValues({...values, [event.currentTarget.id]: event.currentTarget.value})
         if(event.currentTarget.id === 'email') {
@@ -74,30 +73,44 @@ const Login = () => {
     const handleSubmit = (event) => {
         event.preventDefault();
         if(!emailerror && !passworderror) {
-            axios({
-                method:'post',
-                headers : {
-                    'Content-Type':'application/json'
-                },
-                data : {
-                    email : values.email,
-                    password : values.password
-                },
-                url: '/api/login',
-            })
-            .then(response => {
-                let date = new Date();
-                date.setTime(date.getTime() +  180 * 60 * 1000);     // 180 minutes
-                let expiration = `expires ${date.toUTCString()}`;
-                document.cookie = `usertoken = ${response.data.token}; ${expiration} ;path=/`; 
-                setLoginError(false);
-                history.push('/dashboard');
-            })
-            .catch(error => {
-                setLoginError(true);
-            })
+            let date = new Date();
+            document.cookie = `usertoken = ${values.email};path=/`; 
+            document.cookie = `name = John Doe; path=/`; 
+            setLoginError(false);
+            history.push('/dashboard');
+            // axios({
+            //     method:'post',
+            //     headers : {
+            //         'Content-Type':'application/json'
+            //     },
+            //     data : {
+            //         email : values.email,
+            //         password : values.password
+            //     },
+            //     url: '/api/login',
+            // })
+            // .then(response => {
+            //     let date = new Date();
+            //     date.setTime(date.getTime() +  180 * 60 * 1000);     // 180 minutes
+            //     let expiration = `expires ${date.toUTCString()}`;
+            //     document.cookie = `usertoken = ${response.data.token}; ${expiration} ;path=/`; 
+            //     setLoginError(false);
+            //     history.push('/dashboard');
+            // })
+            // .catch(error => {
+            //     setLoginError(true);
+            // })
         }
     }
+    const handleLoggedIn = () => {
+        let token = document.cookie.split(';')[0];
+        if(token !== '') {
+            history.push('/dashboard')
+        }
+    }
+    useEffect(() => {
+        handleLoggedIn();    
+    })
 
     return (
         <Container component="main" maxWidth="sm">

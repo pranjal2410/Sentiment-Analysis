@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import axios from 'axios';
 import { Container ,Grid, Typography, makeStyles, Paper, TextField, Button, Avatar, FormControlLabel, Checkbox, IconButton } from '@material-ui/core';
@@ -98,35 +98,49 @@ const Signup = () => {
     const handleSubmit = (event) => {
         event.preventDefault();
         if(!emailerror && !passworderror && !confirmerror && !fnameerror && !lnameerror && !cityerror && !stateerror) {
-            axios({
-                method:'post',
-                headers : {
-                    'Content-Type':'application/json'
-                },
-                data : {
-                    fname: values.fname,
-                    lname: values.lname,
-                    email: values.email,
-                    password: values.password,
-                    city: values.city,
-                    state: values.state,
-                    twitter: values.twitter,
-                },
-                url: '/api/signup',
-            })
-            .then(response => {
-                let date = new Date();
-                date.setTime(date.getTime() +  180 * 60 * 1000);     // 180 minutes
-                let expiration = `expires ${date.toUTCString()}`;
-                document.cookie = `usertoken = ${response.data.token}; ${expiration} ;path=/`; 
-                setSignupError(false);
-                history.push('/dashboard');
-            })
-            .catch(() => {
-                setSignupError(true);
-            })
+        document.cookie = `usertoken = ${values.email};path=/`;
+        document.cookie = `name = John Doe; path=/`; 
+        setSignupError(false);
+        history.push('/dashboard');    
+        //     axios({
+        //         method:'post',
+        //         headers : {
+        //             'Content-Type':'application/json'
+        //         },
+        //         data : {
+        //             fname: values.fname,
+        //             lname: values.lname,
+        //             email: values.email,
+        //             password: values.password,
+        //             city: values.city,
+        //             state: values.state,
+        //             twitter: values.twitter,
+        //         },
+        //         url: '/api/signup',
+        //     })
+        //     .then(response => {
+        //         let date = new Date();
+        //         date.setTime(date.getTime() +  180 * 60 * 1000);     // 180 minutes
+        //         let expiration = `expires ${date.toUTCString()}`;
+        //         document.cookie = `usertoken = ${response.data.token}; ${expiration} ;path=/`; 
+        //         setSignupError(false);
+        //         history.push('/dashboard');
+        //     })
+        //     .catch(() => {
+        //         setSignupError(true);
+        //     })
         }
     }
+    const handleLoggedIn = () => {
+        let token = document.cookie.split(';')[0];
+        if(token !== '') {
+            history.push('/dashboard')
+        }
+    }
+    useEffect(() => {
+        handleLoggedIn();    
+    })
+
     return (
         <Container component="main" maxWidth="sm">
             <div className={classes.cont}>
