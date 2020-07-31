@@ -100,7 +100,7 @@ const Login = () => {
     }
     useEffect(() => {
         let token = document.cookie.split('=')[1];
-        if(token !== '') {
+        if(token !== '' && token !== undefined) {
             history.push('/dashboard')
         } 
     },[dummy])

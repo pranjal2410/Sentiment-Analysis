@@ -130,10 +130,11 @@ const Signup = () => {
     }
     useEffect(() => {
         let token = document.cookie.split('=')[1];
-        if(token !== '') {
+        if(token !== '' && token !== undefined) {
             history.push('/dashboard')
         } 
     },[dummy])
+
 
     return (
         <Container component="main" maxWidth="sm">

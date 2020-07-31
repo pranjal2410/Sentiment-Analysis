@@ -10,7 +10,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import { useHistory } from 'react-router-dom';
-import { ExitToApp } from '@material-ui/icons';
+import { ExitToApp, Equalizer, Dashboard } from '@material-ui/icons';
 
 
 const drawerWidth = 340;
@@ -134,10 +134,10 @@ const Navbar = () => {
         console.log(data);
 
         setData({
-          name: 'Tanmay Pardeshi',
-          email : 'abc@gmail.com',
-          city: 'Pune',
-          state: 'Maharashtra'
+          name: `${data.fname} ${data.lname}`,
+          email : data.email,
+          city: data.city,
+          state: data.state
         })
     }, [dummy])
 
@@ -165,6 +165,7 @@ const Navbar = () => {
           </Typography>
             <Button style={{ color:'#fff' }} onClick = {() => history.push('/dashboard')}>Dashboard</Button>
             <Button style={{ color:'#fff' }} onClick = {() => history.push('/dashboard/charts')}>Charts</Button>
+            <Button style={{ color: '#fff'}} onClick = {handleLogout} >Logout </Button>
         </Toolbar>
         
       </AppBar>
@@ -183,12 +184,24 @@ const Navbar = () => {
           </IconButton>
         </div>
         <Divider />
-        <div className={classes.profile}> {data.name.charAt(0)}</div>
+        <div className={classes.profile}> {data.name.split(' ')[0].charAt(0)}</div>
         <Divider />
         <p className={classes.name}>{data.name}</p>
         <p className={classes.email}>{data.email} | {data.city}, {data.state}</p>
         <Divider/>
         <List>
+          <ListItem button onClick = {() => history.push('/dashboard')}>
+            <ListItemIcon>
+              <Dashboard />
+            </ListItemIcon>
+            <ListItemText primary="Dashboard"/>
+          </ListItem>
+          <ListItem button onClick = {() => history.push('/dashboard/charts')}>
+            <ListItemIcon>
+              <Equalizer />
+            </ListItemIcon>
+            <ListItemText primary="Charts"/>
+          </ListItem>
           <ListItem button onClick={handleLogout}>
             <ListItemIcon>
               <ExitToApp />
@@ -196,6 +209,7 @@ const Navbar = () => {
             <ListItemText primary="Logout"/>
           </ListItem>
         </List>
+        <Divider />
       </Drawer>
       <main
         className={clsx(classes.content, {
