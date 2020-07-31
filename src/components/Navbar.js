@@ -128,12 +128,11 @@ const Navbar = () => {
     }
 
     useEffect(() => {
-        let data_array = document.cookie.split(';');
         setData({
-          name:data_array[1].split('=')[1],
-          email:data_array[0].split('=')[1],
-          city: data_array[2].split('=')[1],
-          state: data_array[3].split('=')[1]
+          name: 'Tanmay Pardeshi',
+          email : 'abc@gmail.com',
+          city: 'Pune',
+          state: 'Maharashtra'
         })
     }, [dummy])
 
