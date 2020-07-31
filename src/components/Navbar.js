@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import clsx from 'clsx';
 import jwt_decode from 'jwt-decode';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
-import { Drawer, CssBaseline, AppBar, Toolbar, Typography, Divider, IconButton, Button, List } from '@material-ui/core';
+import { Drawer, CssBaseline, AppBar, Toolbar, Typography, Divider, IconButton, Slide, Button, List, Dialog, DialogTitle, DialogContent, DialogActions, TextField, FormControlLabel, Checkbox} from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
@@ -96,8 +96,11 @@ const useStyles = makeStyles((theme) => ({
     margin: '2px',
     color : '##808080',
     textAlign: 'center',
-    marginBottom: '30px',
+    marginBottom: '15px',
   },
+  edit : {
+    margin: '5px auto 15px' 
+  }
 }));
 
 const Navbar = () => {
@@ -106,6 +109,7 @@ const Navbar = () => {
     const theme = useTheme();
     const [open, setOpen] = useState(false);
     const [loggedin, setLoggedIn] = useState(true);
+    const [dialog, setDialog] = useState(false);
     const [data, setData] = useState({
       email : '',
       name : '',
@@ -113,6 +117,11 @@ const Navbar = () => {
       state: ''
     })
     const history = useHistory();
+
+    const Transition = React.forwardRef(function Transition(props, ref) {
+      return <Slide direction="up" ref={ref} {...props} />;
+    });
+    
   
     const handleDrawerOpen = () => {
       setOpen(true);
@@ -126,6 +135,10 @@ const Navbar = () => {
       setLoggedIn(false);
       document.cookie = "usertoken=; path=/;";
       history.push('/');
+    }
+
+    const handleDialog = () => {
+      setDialog(!dialog);
     }
 
     useEffect(() => {
@@ -142,6 +155,7 @@ const Navbar = () => {
     }, [dummy])
 
     return(
+
     <div className={classes.root}>
     <CssBaseline />
       <AppBar
@@ -163,9 +177,10 @@ const Navbar = () => {
           <Typography variant="h6" noWrap className={classes.heading}>
             Welcome to your Dashboard!
           </Typography>
+            <Button style={{ color: '#fff'}} onClick={handleDialog}>Edit Profile</Button>
             <Button style={{ color:'#fff' }} onClick = {() => history.push('/dashboard')}>Dashboard</Button>
             <Button style={{ color:'#fff' }} onClick = {() => history.push('/dashboard/charts')}>Charts</Button>
-            <Button style={{ color: '#fff'}} onClick = {handleLogout} >Logout </Button>
+            <Button style={{ color: '#fff'}} onClick = {handleLogout} >Logout </Button>        
         </Toolbar>
         
       </AppBar>
@@ -184,11 +199,72 @@ const Navbar = () => {
           </IconButton>
         </div>
         <Divider />
+
         <div className={classes.profile}> {data.name.split(' ')[0].charAt(0)}</div>
+
         <Divider />
+
         <p className={classes.name}>{data.name}</p>
         <p className={classes.email}>{data.email} | {data.city}, {data.state}</p>
+
         <Divider/>
+        
+        <Dialog aria-labelledby="form-dialog-title" open={dialog} TransitionComponent={Transition} keepMounted onClose={handleDialog}>
+        
+          <DialogTitle id="form-dialog-title">Edit Profile</DialogTitle>
+          <DialogContent>
+          <TextField
+            variant="outlined"
+            margin="normal"
+            id="fname"
+            label="First Name"
+            type="text"
+            autoComplete="First Name"
+            autoFocus required fullWidth
+          />
+          <TextField
+            variant="outlined"
+            margin="normal"
+            id="lname"
+            label="Last Name"
+            type="text"
+            autoComplete="Last Name"
+            autoFocus required fullWidth
+          />
+          <TextField
+            id="email"
+            variant="outlined"
+            label="Email Address"
+            autoFocus required fullWidth
+          />
+          <TextField
+            id="city"
+            variant="outlined"
+            label="Enter city name"
+            autoFocus required fullWidth
+          />
+          <TextField
+            id="state"
+            variant="outlined"
+            label="Enter state name"
+            autoFocus required fullWidth
+          />
+          <FormControlLabel
+            control={<Checkbox name="twitter"  color="primary" />}
+            label="I have a Twitter account"
+            id="twitter"
+          />
+          </DialogContent>
+          <DialogActions>
+            <Button color="primary" onClick={handleDialog}>
+              Cancel
+            </Button>
+            <Button color="primary">
+              Subscribe
+            </Button>
+          </DialogActions>
+        </Dialog>
+
         <List>
           <ListItem button onClick = {() => history.push('/dashboard')}>
             <ListItemIcon>
