@@ -97,6 +97,7 @@ const useStyles = makeStyles((theme) => ({
 
 const Navbar = () => {
     const classes = useStyles();
+    const dummy = null;
     const theme = useTheme();
     const [open, setOpen] = useState(false);
     const [data, setData] = useState({
@@ -118,13 +119,12 @@ const Navbar = () => {
     useEffect(() => {
         let data_array = document.cookie.split(';');
         setData({
-          name:data_array[1],
-          email:data_array[0],
-          city: data_array[2],
-          state: data_array[3]
+          name:data_array[1].split('=')[1],
+          email:data_array[0].split('=')[1],
+          city: data_array[2].split('=')[1],
+          state: data_array[3].split('=')[1]
         })
-        console.log(data);
-    }, {})
+    }, [dummy])
 
     return(
     <div className={classes.root}>
@@ -168,10 +168,10 @@ const Navbar = () => {
           </IconButton>
         </div>
         <Divider />
-        <div className={classes.profile}> JD </div>
+        <div className={classes.profile}> {data.name.charAt(0)}</div>
         <Divider />
-        <p className={classes.name}>John Doe</p>
-        <p className={classes.email}>johndoe@gmail.com | Pune, Maharashtra</p>
+        <p className={classes.name}>{data.name}</p>
+        <p className={classes.email}>{data.email} | {data.city}, {data.state}</p>
         <Divider/>
       </Drawer>
       <main

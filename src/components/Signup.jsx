@@ -44,6 +44,7 @@ const useStyles = makeStyles((theme) => ({
 
 const Signup = () => {
     const classes = useStyles();
+    const dummy = null;
     let history = useHistory();
     const [values, setValues] = useState({
         fname: '',
@@ -134,11 +135,11 @@ const Signup = () => {
         }
     }
     useEffect(() => {
-        let token = document.cookie.split(';')[0];
+        let token = document.cookie.split(';')[0].split('=')[1];
         if(token !== '') {
             history.push('/dashboard')
         } 
-    },[])
+    },[dummy])
 
     return (
         <Container component="main" maxWidth="sm">
