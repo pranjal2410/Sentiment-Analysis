@@ -74,38 +74,32 @@ const Login = () => {
     const handleSubmit = (event) => {
         event.preventDefault();
         if(!emailerror && !passworderror) {
-            document.cookie = `usertoken = ${values.email};path=/`; 
-            document.cookie = `name = John Doe; path=/`; 
-            document.cookie = `city = Pune; path=/`;
-            document.cookie = `state = Maharashtra; path=/`;
-            setLoginError(false);
-            history.push('/dashboard');
-            // axios({
-            //     method:'post',
-            //     headers : {
-            //         'Content-Type':'application/json'
-            //     },
-            //     data : {
-            //         email : values.email,
-            //         password : values.password
-            //     },
-            //     url: '/api/login',
-            // })
-            // .then(response => {
-            //     let date = new Date();
-            //     date.setTime(date.getTime() +  180 * 60 * 1000);     // 180 minutes
-            //     let expiration = `expires ${date.toUTCString()}`;
-            //     document.cookie = `usertoken = ${response.data.token}; ${expiration} ;path=/`; 
-            //     setLoginError(false);
-            //     history.push('/dashboard');
-            // })
-            // .catch(error => {
-            //     setLoginError(true);
-            // })
+            axios({
+                method:'post',
+                headers : {
+                    'Content-Type':'application/json'
+                },
+                data : {
+                    email : values.email,
+                    password : values.password
+                },
+                url: '/api/login',
+            })
+            .then(response => {
+                let date = new Date();
+                date.setTime(date.getTime() +  180 * 60 * 1000);     // 180 minutes
+                let expiration = `expires ${date.toUTCString()}`;
+                document.cookie = `usertoken = ${response.data.token}; ${expiration} ;path=/`; 
+                setLoginError(false);
+                history.push('/dashboard');
+            })
+            .catch(error => {
+                setLoginError(true);
+            })
         }
     }
     useEffect(() => {
-        let token = document.cookie.split(';')[0].split('=')[1];
+        let token = "";
         if(token !== '') {
             history.push('/dashboard')
         } 

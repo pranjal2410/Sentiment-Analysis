@@ -99,43 +99,37 @@ const Signup = () => {
     const handleSubmit = (event) => {
         event.preventDefault();
         if(!emailerror && !passworderror && !confirmerror && !fnameerror && !lnameerror && !cityerror && !stateerror) {
-            document.cookie = `usertoken = ${values.email};path=/`; 
-            document.cookie = `name = John Doe; path=/`; 
-            document.cookie = `city = Pune; path=/`;
-            document.cookie = `state = Maharashtra; path=/`;
-            setSignupError(false);
-            history.push('/dashboard');    
-        //     axios({
-        //         method:'post',
-        //         headers : {
-        //             'Content-Type':'application/json'
-        //         },
-        //         data : {
-        //             fname: values.fname,
-        //             lname: values.lname,
-        //             email: values.email,
-        //             password: values.password,
-        //             city: values.city,
-        //             state: values.state,
-        //             twitter: values.twitter,
-        //         },
-        //         url: '/api/signup',
-        //     })
-        //     .then(response => {
-        //         let date = new Date();
-        //         date.setTime(date.getTime() +  180 * 60 * 1000);     // 180 minutes
-        //         let expiration = `expires ${date.toUTCString()}`;
-        //         document.cookie = `usertoken = ${response.data.token}; ${expiration} ;path=/`; 
-        //         setSignupError(false);
-        //         history.push('/dashboard');
-        //     })
-        //     .catch(() => {
-        //         setSignupError(true);
-        //     })
+            axios({
+                method:'post',
+                headers : {
+                    'Content-Type':'application/json'
+                },
+                data : {
+                    fname: values.fname,
+                    lname: values.lname,
+                    email: values.email,
+                    password: values.password,
+                    city: values.city,
+                    state: values.state,
+                    twitter: values.twitter,
+                },
+                url: '/api/signup',
+            })
+            .then(response => {
+                let date = new Date();
+                date.setTime(date.getTime() +  180 * 60 * 1000);     // 180 minutes
+                let expiration = `expires ${date.toUTCString()}`;
+                document.cookie = `usertoken = ${response.data.token}; ${expiration} ;path=/`; 
+                setSignupError(false);
+                history.push('/dashboard');
+            })
+            .catch(() => {
+                setSignupError(true);
+            })
         }
     }
     useEffect(() => {
-        let token = document.cookie.split(';')[0].split('=')[1];
+        let token = "";
         if(token !== '') {
             history.push('/dashboard')
         } 

@@ -1,11 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import clsx from 'clsx';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
-import { Drawer, CssBaseline, AppBar, Toolbar, Typography, Divider, IconButton, Button } from '@material-ui/core';
+import { Drawer, CssBaseline, AppBar, Toolbar, Typography, Divider, IconButton, Button, List } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
 import { useHistory } from 'react-router-dom';
+import { ExitToApp } from '@material-ui/icons';
 
 
 const drawerWidth = 340;
@@ -100,6 +104,7 @@ const Navbar = () => {
     const dummy = null;
     const theme = useTheme();
     const [open, setOpen] = useState(false);
+    const [loggedin, setLoggedIn] = useState(true);
     const [data, setData] = useState({
       email : '',
       name : '',
@@ -115,6 +120,12 @@ const Navbar = () => {
     const handleDrawerClose = () => {
       setOpen(false);
     };
+
+    const handleLogout = () => {
+      setLoggedIn(false);
+      document.cookie = "usertoken=; path=/;";
+      history.push('/');
+    }
 
     useEffect(() => {
         let data_array = document.cookie.split(';');
@@ -173,6 +184,14 @@ const Navbar = () => {
         <p className={classes.name}>{data.name}</p>
         <p className={classes.email}>{data.email} | {data.city}, {data.state}</p>
         <Divider/>
+        <List>
+          <ListItem button onClick={handleLogout}>
+            <ListItemIcon>
+              <ExitToApp />
+            </ListItemIcon>
+            <ListItemText primary="Logout"/>
+          </ListItem>
+        </List>
       </Drawer>
       <main
         className={clsx(classes.content, {
