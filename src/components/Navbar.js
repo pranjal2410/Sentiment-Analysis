@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import clsx from 'clsx';
 import jwt_decode from 'jwt-decode';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
-import { Drawer, CssBaseline, AppBar, Toolbar, Typography, Divider, IconButton, Slide, Button, List, Dialog, DialogTitle, DialogContent, DialogActions, TextField, FormControlLabel, Checkbox} from '@material-ui/core';
+import { Hidden, Drawer, CssBaseline, AppBar, Toolbar, Typography, Divider, IconButton, Slide, Button, List, Dialog, DialogTitle, DialogContent, DialogActions, TextField, FormControlLabel, Checkbox} from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
@@ -100,6 +100,9 @@ const useStyles = makeStyles((theme) => ({
   },
   edit : {
     margin: '5px auto 15px' 
+  },
+  textfield: {
+    margin: '10px 0px'
   }
 }));
 
@@ -118,11 +121,6 @@ const Navbar = () => {
     })
     const history = useHistory();
 
-    const Transition = React.forwardRef(function Transition(props, ref) {
-      return <Slide direction="up" ref={ref} {...props} />;
-    });
-    
-  
     const handleDrawerOpen = () => {
       setOpen(true);
     };
@@ -144,7 +142,6 @@ const Navbar = () => {
     useEffect(() => {
         let token = decodeURIComponent(document.cookie.split('=')[1]);
         let data= jwt_decode(token);
-        console.log(data);
 
         setData({
           name: `${data.fname} ${data.lname}`,
@@ -177,10 +174,12 @@ const Navbar = () => {
           <Typography variant="h6" noWrap className={classes.heading}>
             Welcome to your Dashboard!
           </Typography>
+          <Hidden mdDown>
             <Button style={{ color: '#fff'}} onClick={handleDialog}>Edit Profile</Button>
-            <Button style={{ color:'#fff' }} onClick = {() => history.push('/dashboard')}>Dashboard</Button>
-            <Button style={{ color:'#fff' }} onClick = {() => history.push('/dashboard/charts')}>Charts</Button>
+            <Button style={{ color: '#fff' }} onClick = {() => history.push('/dashboard')}>Dashboard</Button>
+            <Button style={{ color: '#fff' }} onClick = {() => history.push('/dashboard/charts')}>Charts</Button>
             <Button style={{ color: '#fff'}} onClick = {handleLogout} >Logout </Button>        
+          </Hidden>
         </Toolbar>
         
       </AppBar>
@@ -207,14 +206,21 @@ const Navbar = () => {
         <p className={classes.name}>{data.name}</p>
         <p className={classes.email}>{data.email} | {data.city}, {data.state}</p>
 
+        <Button variant="contained" style={{ margin: '10px auto 15px', backgroundColor: "#00acee"}} onClick={handleDialog}>Edit Profile</Button>
+
         <Divider/>
-        
-        <Dialog aria-labelledby="form-dialog-title" open={dialog} TransitionComponent={Transition} keepMounted onClose={handleDialog}>
+
+        <Dialog
+          aria-labelledby="form-dialog-title" 
+          open={dialog} 
+          onClose={handleDialog}
+        >
         
           <DialogTitle id="form-dialog-title">Edit Profile</DialogTitle>
           <DialogContent>
           <TextField
             variant="outlined"
+            className={classes.textfield}
             margin="normal"
             id="fname"
             label="First Name"
@@ -223,6 +229,7 @@ const Navbar = () => {
             autoFocus required fullWidth
           />
           <TextField
+            className={classes.textfield}
             variant="outlined"
             margin="normal"
             id="lname"
@@ -232,24 +239,28 @@ const Navbar = () => {
             autoFocus required fullWidth
           />
           <TextField
-            id="email"
             variant="outlined"
+            className={classes.textfield}
+            id="email"
             label="Email Address"
             autoFocus required fullWidth
           />
           <TextField
-            id="city"
             variant="outlined"
+            className={classes.textfield}
+            id="city"
             label="Enter city name"
             autoFocus required fullWidth
           />
           <TextField
-            id="state"
             variant="outlined"
+            className={classes.textfield}
+            id="state"
             label="Enter state name"
             autoFocus required fullWidth
           />
           <FormControlLabel
+            className={classes.textfield}
             control={<Checkbox name="twitter"  color="primary" />}
             label="I have a Twitter account"
             id="twitter"
