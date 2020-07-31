@@ -65,7 +65,7 @@ const SimpleTable = () => {
 
   useEffect(() => { 
     fetchrows() 
-  }, [dummy], {dummy}, {dummy});
+  }, [dummy]);
 
   return (
     <Container>

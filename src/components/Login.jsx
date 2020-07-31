@@ -73,9 +73,10 @@ const Login = () => {
     const handleSubmit = (event) => {
         event.preventDefault();
         if(!emailerror && !passworderror) {
-            let date = new Date();
             document.cookie = `usertoken = ${values.email};path=/`; 
             document.cookie = `name = John Doe; path=/`; 
+            document.cookie = `city = Pune; path=/`;
+            document.cookie = `state = Maharashtra; path=/`;
             setLoginError(false);
             history.push('/dashboard');
             // axios({
@@ -102,15 +103,12 @@ const Login = () => {
             // })
         }
     }
-    const handleLoggedIn = () => {
+    useEffect(() => {
         let token = document.cookie.split(';')[0];
         if(token !== '') {
             history.push('/dashboard')
-        }
-    }
-    useEffect(() => {
-        handleLoggedIn();    
-    })
+        } 
+    },[])
 
     return (
         <Container component="main" maxWidth="sm">

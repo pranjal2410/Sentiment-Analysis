@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import clsx from 'clsx';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import { Drawer, CssBaseline, AppBar, Toolbar, Typography, Divider, IconButton, Button } from '@material-ui/core';
@@ -98,7 +98,13 @@ const useStyles = makeStyles((theme) => ({
 const Navbar = () => {
     const classes = useStyles();
     const theme = useTheme();
-    const [open, setOpen] = React.useState(false);
+    const [open, setOpen] = useState(false);
+    const [data, setData] = useState({
+      email : '',
+      name : '',
+      city: '',
+      state: ''
+    })
     const history = useHistory();
   
     const handleDrawerOpen = () => {
@@ -108,6 +114,17 @@ const Navbar = () => {
     const handleDrawerClose = () => {
       setOpen(false);
     };
+
+    useEffect(() => {
+        let data_array = document.cookie.split(';');
+        setData({
+          name:data_array[1],
+          email:data_array[0],
+          city: data_array[2],
+          state: data_array[3]
+        })
+        console.log(data);
+    }, {})
 
     return(
     <div className={classes.root}>

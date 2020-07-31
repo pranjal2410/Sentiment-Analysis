@@ -98,10 +98,12 @@ const Signup = () => {
     const handleSubmit = (event) => {
         event.preventDefault();
         if(!emailerror && !passworderror && !confirmerror && !fnameerror && !lnameerror && !cityerror && !stateerror) {
-        document.cookie = `usertoken = ${values.email};path=/`;
-        document.cookie = `name = John Doe; path=/`; 
-        setSignupError(false);
-        history.push('/dashboard');    
+            document.cookie = `usertoken = ${values.email};path=/`; 
+            document.cookie = `name = John Doe; path=/`; 
+            document.cookie = `city = Pune; path=/`;
+            document.cookie = `state = Maharashtra; path=/`;
+            setSignupError(false);
+            history.push('/dashboard');    
         //     axios({
         //         method:'post',
         //         headers : {
@@ -131,15 +133,12 @@ const Signup = () => {
         //     })
         }
     }
-    const handleLoggedIn = () => {
+    useEffect(() => {
         let token = document.cookie.split(';')[0];
         if(token !== '') {
             history.push('/dashboard')
-        }
-    }
-    useEffect(() => {
-        handleLoggedIn();    
-    })
+        } 
+    },[])
 
     return (
         <Container component="main" maxWidth="sm">
