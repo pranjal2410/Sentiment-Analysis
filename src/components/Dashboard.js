@@ -18,7 +18,7 @@ const useStyles = makeStyles({
     margin: 'auto',
     width: '50%',
     textAlign:'center',
-    paddingTop: '30%'
+    paddingTop: '25%'
   },
   paperNumber: {
     paddingTop: '30px',

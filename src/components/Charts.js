@@ -15,7 +15,7 @@ const useStyles = makeStyles({
         margin: 'auto',
         width: '50%',
         textAlign:'center',
-        paddingTop: '20%'
+        paddingTop: '15%'
     },
 })
 
