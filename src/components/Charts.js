@@ -1,12 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Typography, CircularProgress, Container, FormGroup, FormControlLabel, Switch } from '@material-ui/core';
+import { Typography, CircularProgress, Container, FormGroup, FormControlLabel, Switch, Card } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
 import { Bar, Doughnut } from 'react-chartjs-2';
 
 const color = ['rgba(255, 99, 132, 0.8)','rgba(54, 162, 235, 0.8)','rgba(255, 206, 86, 0.8)','rgba(75, 192, 192, 0.8)','rgba(153, 102, 255, 0.8)','rgba(255, 159, 64, 0.8)','rgba(255, 99, 132, 0.8)','rgba(54, 162, 235, 0.8)','rgba(255, 206, 86, 0.8)','rgba(75, 192, 192, 0.8)','rgba(153, 102, 255, 0.8)','rgba(255, 159, 64, 0.8)','rgba(255, 99, 132, 0.8)','rgba(54, 162, 235, 0.8)','rgba(255, 206, 86, 0.8)','rgba(75, 192, 192, 0.8)','rgba(153, 102, 255, 0.8)','rgba(255, 159, 64, 0.8)','rgba(255, 99, 132, 0.8)','rgba(54, 162, 235, 0.8)','rgba(255, 206, 86, 0.8)','rgba(75, 192, 192, 0.8)','rgba(153, 102, 255, 0.8)','rgba(255, 159, 64, 0.8)','rgba(255, 99, 132, 0.8)','rgba(54, 162, 235, 0.8)','rgba(255, 206, 86, 0.8)','rgba(75, 192, 192, 0.8)','rgba(153, 102, 255, 0.8)','rgba(255, 159, 64, 0.8)','rgba(255, 99, 132, 0.8)','rgba(54, 162, 235, 0.8)','rgba(255, 206, 86, 0.8)','rgba(255, 99, 132, 0.8)','rgba(54, 162, 235, 0.8)','rgba(255, 206, 86, 0.8)','rgba(75, 192, 192, 0.8)',]
 
 const useStyles = makeStyles({
+    card: {
+        overflowX: "auto",
+        marginBottom: "20px"
+    },
     loading : {
         margin: 'auto',
         width: '50%',
@@ -74,12 +78,15 @@ const Charts = () => {
                     }
                 ],
             },
+            width: 1152,
+            height: 648,
             options: {
                 legend:{
                     display:true,
                     position:'right'
                 },
-                maintainAspectRatio: true
+                maintainAspectRatio: false,
+                responsive: false
             }
         });
     }
@@ -94,29 +101,37 @@ const Charts = () => {
                         <Typography variant="h6">Loading your data..</Typography>
                     </div>
                 ):(
-                    <Container>  
-                        {
-                            toggle.switch1 ?
-                            <Bar {...generateChart(location, totalConfirmed, "Confirmed Cases")}/> :
-                            <Doughnut {...generateChart(location, totalConfirmed, "Confirmed Cases")}/>
-                        }
-                        <FormGroup row>
-                        <FormControlLabel
-                            control={<Switch onChange={handleSwitch} id="switch1" />}
-                            label="Switch Graph Type"
-                         />
-                        </FormGroup>
-                        {
-                            toggle.switch2 ? 
-                            <Bar {...generateChart(location, deaths, "Deaths")} /> : 
-                            <Doughnut {...generateChart(location, deaths, "Deaths")}/>
-                        }
-                        <FormGroup row >
-                        <FormControlLabel
-                            control={<Switch onChange={handleSwitch} id="switch2"/>}
-                            label="Switch Graph Type"
-                         />
-                        </FormGroup>
+                    <Container>
+                        <Card className={classes.card}>
+                            <div style = {{padding: "20px"}}>
+                                {
+                                    toggle.switch1 ?
+                                    <Bar {...generateChart(location, totalConfirmed, "Confirmed Cases")}/> :
+                                    <Doughnut {...generateChart(location, totalConfirmed, "Confirmed Cases")}/>
+                                }
+                                <FormGroup row>
+                                <FormControlLabel
+                                    control={<Switch onChange={handleSwitch} id="switch1" />}
+                                    label="Switch Graph Type"
+                                />
+                                </FormGroup>
+                            </div>
+                        </Card>  
+                        <Card className={classes.card}>
+                            <div style = {{padding: "20px"}}>
+                                {
+                                    toggle.switch2 ? 
+                                    <Bar {...generateChart(location, deaths, "Deaths")} /> : 
+                                    <Doughnut {...generateChart(location, deaths, "Deaths")}/>
+                                }
+                                <FormGroup row >
+                                <FormControlLabel
+                                    control={<Switch onChange={handleSwitch} id="switch2"/>}
+                                    label="Switch Graph Type"
+                                />
+                                </FormGroup>
+                            </div>
+                        </Card>
                     </Container>
                 )
             }
