@@ -48,7 +48,7 @@ const Charts = () => {
         })
         .catch(() => window.alert("Please Check you internet connection!"))
     }
-    useEffect(() => {
+    useEffect(() => {z
         fetchCases()
     },[dummy]);
 
