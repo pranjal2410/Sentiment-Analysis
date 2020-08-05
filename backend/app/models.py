@@ -9,6 +9,7 @@ class User(AbstractUser):
     email = models.EmailField(max_length=120, null=False, unique=True)
     city = models.CharField(max_length=50)
     state = models.CharField(max_length=50)
+    twitter = models.BooleanField(default=False)
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
