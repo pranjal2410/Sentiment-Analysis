@@ -63,3 +63,5 @@ class LoginSerializer(serializers.Serializer):
             'email': user.email,
             'token': jwt_token
         }
+
+
