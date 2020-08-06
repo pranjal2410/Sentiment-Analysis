@@ -1,9 +1,9 @@
 from django.contrib import admin
 from django.urls import path, include
-from app.views import *
+
+from app.views import RegisterView
 
 urlpatterns = [
-    path('api/register/', UserRegistrationView.as_view(), name='register'),
-    path('api/login/', UserLoginView.as_view(), name='login'),
+    path('', RegisterView.as_view(), name='register'),
     path('admin/', admin.site.urls),
 ]
