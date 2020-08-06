@@ -46,7 +46,7 @@ class LoginSerializer(serializers.Serializer):
     def validate(self, data):
         email = data.get("email", None)
         password = data.get("password", None)
-        user = authenticate(username=email, password=password)
+        user = authenticate(email=email, password=password)
         if user is None:
             raise serializers.ValidationError(
                 'A user with this email and password is not found.'
@@ -63,5 +63,3 @@ class LoginSerializer(serializers.Serializer):
             'email': user.email,
             'token': jwt_token
         }
-
-

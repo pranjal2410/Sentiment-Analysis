@@ -102,20 +102,22 @@ const Signup = () => {
             axios({
                 method:'post',
                 headers : {
+                    "Access-Control-Allow-Origin": "*",
                     'Content-Type':'application/json'
                 },
                 data : {
-                    fname: values.fname,
-                    lname: values.lname,
+                    first_name: values.fname,
+                    last_name: values.lname,
                     email: values.email,
                     password: values.password,
                     city: values.city,
                     state: values.state,
                     twitter: values.twitter,
                 },
-                url: '/api/signup',
+                url: '/api/register/',
             })
             .then(response => {
+                console.log(response);
                 let date = new Date();
                 date.setTime(date.getTime() +  180 * 60 * 1000);     // 180 minutes
                 let expiration = `expires ${date.toUTCString()}`;
