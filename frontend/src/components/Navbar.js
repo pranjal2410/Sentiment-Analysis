@@ -144,9 +144,6 @@ const Navbar = () => {
       else if(id === 'last_name') {
         setData({...data, last_name:event.target.value})
       }
-      else if(id === 'email') {
-        setData({...data, email:event.target.value})
-      }
       else if(id === 'city') {
         setData({...data, city:event.target.value})
       }
@@ -162,11 +159,14 @@ const Navbar = () => {
 
     const handleSubmit = (e) => {
       e.preventDefault();
+      let cookie = getCookie("usertoken");
       axios({
-        method: 'post',
-        headers : {
-          'Content-Type':'application/json'
-      },
+        method: 'patch',
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Content-Type":"application/json",
+          "Authorization": `Bearer ${cookie}`
+        },
       data : {
           first_name: data.first_name,
           last_name: data.last_name,
@@ -176,7 +176,7 @@ const Navbar = () => {
           state: data.state,
           twitter: data.twitter,
       },
-      url: '/api/edit',
+      url: '/api/edit/',
       })
       .then(() => {
         setDialog(false);
@@ -187,30 +187,59 @@ const Navbar = () => {
       })
     }
 
+    const getCookie = (name) => {
+      let dc = document.cookie;
+      let prefix = name + "=";
+      let begin = dc.indexOf('; ' + prefix);
+      if (begin === -1) {
+        begin = dc.indexOf(prefix);
+        if (begin !== 0) return null;
+      }
+      else
+      {
+          begin += 2;
+          var end = document.cookie.indexOf(";", begin);
+          if (end === -1) {
+            end = dc.length;
+          }
+      }
+      return decodeURI(dc.substring(begin + prefix.length, end));
+
+    }
+
     const fetchProfile = () => {
-      axios({
-        method:'get',
-        headers: {
-          "Access-Control-Allow-Origin": "*",
-          "Content-Type":"application/json",
-          "Authorization": `Bearer ${document.cookie.split('=')[1]}`
-        },
-        url : '/api/profile/',
-      })
-      .then(response => console.log(response))
-      .catch(error => console.log(error))
+      let cookie = getCookie("usertoken");
+      if(cookie === null) {
+        history.push('/');
+      }
+      else {
+        axios({
+          method:'get',
+          headers: {
+            "Access-Control-Allow-Origin": "*",
+            "Content-Type":"application/json",
+            "Authorization": `Bearer ${cookie}`
+          },
+          url : '/api/profile/',
+        })
+        .then(response => {
+          let object = response.data.data[0];
+          setData({
+            email: object.email,
+            first_name : object.first_name,
+            last_name: object.last_name,
+            city: object.city,
+            state: object.state,
+            twitter: object.twitter
+
+          })
+        })
+        .catch(error => console.log(error))
+        }
     }
 
     useEffect(() => {
-        
-        let token = decodeURIComponent(document.cookie.split('=')[1]);
-        
-        if( token === '' || token === undefined ) {
-            history.push('/');
-        }
-        else {
-            fetchProfile();
-        }
+        fetchProfile();
     }, [dummy])
 
     return(
@@ -302,15 +331,6 @@ const Navbar = () => {
                   type="text"
                   autoComplete="Last Name"
                   value={ data.last_name }
-                  autoFocus required fullWidth
-                />
-                <TextField
-                  variant="outlined"
-                  className={classes.textfield}
-                  onChange= {handleChange}
-                  id="email"
-                  label="Email Address"
-                  value = { data.email }
                   autoFocus required fullWidth
                 />
                 <TextField

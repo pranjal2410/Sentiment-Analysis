@@ -90,7 +90,7 @@ const Login = () => {
                 let date = new Date();
                 date.setTime(date.getTime() +  180 * 60 * 1000);     // 180 minutes
                 let expiration = `expires ${date.toUTCString()}`;
-                document.cookie = `usertoken = ${response.data.token}; expires = ${expiration} ;path=/`; 
+                document.cookie = `usertoken=${response.data.token}; expires=${expiration} ;path=/`; 
                 setLoginError(false);
                 history.push('/dashboard');
             })
