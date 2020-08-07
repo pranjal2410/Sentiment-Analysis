@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, Link } from 'react-router-dom';
 import axios from 'axios';
 import { Container ,Grid, Typography, makeStyles, Paper, TextField, Button, Avatar, FormControlLabel, Checkbox, IconButton } from '@material-ui/core';
 import { LockOutlined, Twitter, Visibility, VisibilityOff } from '@material-ui/icons';
-import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
     cont : {
@@ -66,7 +65,9 @@ const Signup = () => {
 
     const handleChange = (event) => {
         setValues({...values, [event.target.id]: event.target.value})
+        
         setSignupError(false);
+        
         if(event.currentTarget.id === 'fname') {
             setFNameError(event.target.value === '');
         }

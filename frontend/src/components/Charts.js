@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
+import { Bar, Doughnut } from 'react-chartjs-2';
+
 import axios from 'axios';
+
 import { Typography, CircularProgress, Container, FormGroup, FormControlLabel, Switch, Card } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
-import { Bar, Doughnut } from 'react-chartjs-2';
 
 const color = ['rgba(255, 99, 132, 0.8)','rgba(54, 162, 235, 0.8)','rgba(255, 206, 86, 0.8)','rgba(75, 192, 192, 0.8)','rgba(153, 102, 255, 0.8)','rgba(255, 159, 64, 0.8)','rgba(255, 99, 132, 0.8)','rgba(54, 162, 235, 0.8)','rgba(255, 206, 86, 0.8)','rgba(75, 192, 192, 0.8)','rgba(153, 102, 255, 0.8)','rgba(255, 159, 64, 0.8)','rgba(255, 99, 132, 0.8)','rgba(54, 162, 235, 0.8)','rgba(255, 206, 86, 0.8)','rgba(75, 192, 192, 0.8)','rgba(153, 102, 255, 0.8)','rgba(255, 159, 64, 0.8)','rgba(255, 99, 132, 0.8)','rgba(54, 162, 235, 0.8)','rgba(255, 206, 86, 0.8)','rgba(75, 192, 192, 0.8)','rgba(153, 102, 255, 0.8)','rgba(255, 159, 64, 0.8)','rgba(255, 99, 132, 0.8)','rgba(54, 162, 235, 0.8)','rgba(255, 206, 86, 0.8)','rgba(75, 192, 192, 0.8)','rgba(153, 102, 255, 0.8)','rgba(255, 159, 64, 0.8)','rgba(255, 99, 132, 0.8)','rgba(54, 162, 235, 0.8)','rgba(255, 206, 86, 0.8)','rgba(255, 99, 132, 0.8)','rgba(54, 162, 235, 0.8)','rgba(255, 206, 86, 0.8)','rgba(75, 192, 192, 0.8)',]
 
@@ -47,7 +49,8 @@ const Charts = () => {
             setDeaths(labels.map(label => label.deaths))
         })
         .catch(() => window.alert("Please Check you internet connection!"))
-    }
+		}
+		
     useEffect(() => {
         fetchCases()
     },[dummy]);
@@ -110,10 +113,10 @@ const Charts = () => {
                                     <Doughnut {...generateChart(location, totalConfirmed, "Confirmed Cases")}/>
                                 }
                                 <FormGroup row>
-                                <FormControlLabel
-                                    control={<Switch onChange={handleSwitch} id="switch1" />}
-                                    label="Switch Graph Type"
-                                />
+                                    <FormControlLabel
+                                        control={<Switch onChange={handleSwitch} id="switch1" />}
+                                        label="Switch Graph Type"
+                                    />
                                 </FormGroup>
                             </div>
                         </Card>  
@@ -125,10 +128,10 @@ const Charts = () => {
                                     <Doughnut {...generateChart(location, deaths, "Deaths")}/>
                                 }
                                 <FormGroup row >
-                                <FormControlLabel
-                                    control={<Switch onChange={handleSwitch} id="switch2"/>}
-                                    label="Switch Graph Type"
-                                />
+                                    <FormControlLabel
+                                        control={<Switch onChange={handleSwitch} id="switch2"/>}
+                                        label="Switch Graph Type"
+                                    />
                                 </FormGroup>
                             </div>
                         </Card>
