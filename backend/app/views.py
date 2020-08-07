@@ -3,10 +3,11 @@ from rest_framework.generics import CreateAPIView, RetrieveAPIView
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework import status
+from rest_framework.views import APIView
 from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 from rest_framework_jwt.settings import api_settings
 
-from .serliazers import RegisterSerializer, LoginSerializer
+from .serliazers import RegisterSerializer, LoginSerializer, EditSerializer
 from .models import User
 
 JWT_PAYLOAD_HANDLER = api_settings.JWT_PAYLOAD_HANDLER
@@ -69,7 +70,7 @@ class LoginView(CreateAPIView):
 
 class ProfileView(RetrieveAPIView):
     permission_classes = (IsAuthenticated,)
-    authentication_class = JSONWebTokenAuthentication
+    authentication_class = (JSONWebTokenAuthentication,)
 
     def get(self, request):
         try:
@@ -98,3 +99,27 @@ class ProfileView(RetrieveAPIView):
                 'error': str(e)
             }
         return Response(response, status=status_code)
+
+
+class EditView(APIView):
+    serializer_class = EditSerializer
+    permission_classes = (IsAuthenticated,)
+    authentication_classes = (JSONWebTokenAuthentication,)
+
+    def patch(self, request):
+        serializer = self.serializer_class(data=request.data)
+        if serializer.is_valid():
+            serializer.update(User.objects.get(username=request.user), request.data)
+            response = {
+                'success': 'True',
+                'status code': status.HTTP_200_OK,
+            }
+            status_code = status.HTTP_200_OK
+
+            return Response(response, status=status_code)
+        else:
+            response = {
+                'success': 'False',
+                'status code': status.HTTP_401_UNAUTHORIZED,
+            }
+            return Response(response, status=status.HTTP_401_UNAUTHORIZED)

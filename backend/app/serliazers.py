@@ -22,24 +22,24 @@ class RegisterSerializer(serializers.ModelSerializer):
             )
         ]
 
-    def create(self, validated_data):
+    def create(self, data):
         user = User.objects.create(
-            username=validated_data['email'],
-            email=validated_data['email'],
-            first_name=validated_data['first_name'],
-            last_name=validated_data['last_name'],
-            city=validated_data['city'],
-            state=validated_data['state'],
-            twitter=validated_data['twitter']
+            username=data['email'],
+            email=data['email'],
+            first_name=data['first_name'],
+            last_name=data['last_name'],
+            city=data['city'],
+            state=data['state'],
+            twitter=data['twitter']
         )
-        user.set_password(validated_data['password'])
+        user.set_password(data['password'])
         user.save()
         user.password = '**hidden**'
         return user
 
 
 class LoginSerializer(serializers.Serializer):
-    email = serializers.CharField(max_length=255)
+    email = serializers.EmailField(max_length=255)
     password = serializers.CharField(max_length=128, write_only=True)
     token = serializers.CharField(max_length=255, read_only=True)
 
@@ -63,3 +63,24 @@ class LoginSerializer(serializers.Serializer):
             'email': user.email,
             'token': jwt_token
         }
+
+
+class EditSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['email', 'first_name', 'last_name', 'city', 'state', 'twitter']
+
+    def update(self, instance, data):
+        user = instance
+        if user is None:
+            raise serializers.ValidationError(
+                'A user with this email and password is not found.'
+            )
+        user.email = data['email']
+        user.first_name = data['first_name']
+        user.last_name = data['last_name']
+        user.city = data['city']
+        user.state = data['state']
+        user.twitter = data['twitter']
+        user.save()
+        return user

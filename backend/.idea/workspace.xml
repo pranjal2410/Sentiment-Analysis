@@ -21,6 +21,9 @@
   <component name="ChangeListManager">
     <list default="true" id="01314f00-da69-4c05-907e-58809149695f" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/serliazers.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/serliazers.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/backend/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../frontend/src/components/Login.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/components/Login.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../frontend/src/components/Navbar.js" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/components/Navbar.js" afterDir="false" />
@@ -100,7 +103,8 @@
       <workItem from="1596779967171" duration="9535000" />
       <workItem from="1596797888842" duration="558000" />
       <workItem from="1596804254742" duration="1087000" />
-      <workItem from="1596810705652" duration="659000" />
+      <workItem from="1596810705652" duration="2627000" />
+      <workItem from="1596826086177" duration="3266000" />
     </task>
     <servers />
   </component>
@@ -124,5 +128,9 @@
       <screen x="0" y="27" width="1920" height="1053" />
     </state>
     <state x="693" y="301" width="524" height="511" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.27.1920.1053@0.27.1920.1053" timestamp="1596740876931" />
+    <state x="622" y="259" key="search.everywhere.popup" timestamp="1596826877364">
+      <screen x="0" y="27" width="1920" height="1053" />
+    </state>
+    <state x="622" y="259" key="search.everywhere.popup/0.27.1920.1053@0.27.1920.1053" timestamp="1596826877364" />
   </component>
 </project>
