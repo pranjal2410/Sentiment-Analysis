@@ -77,7 +77,8 @@ const Login = () => {
             axios({
                 method:'post',
                 headers : {
-                    'Content-Type':'application/json'
+                    "Access-Control-Allow-Origin": "*",
+                    "Content-Type":"application/json"
                 },
                 data : {
                     email : values.email,

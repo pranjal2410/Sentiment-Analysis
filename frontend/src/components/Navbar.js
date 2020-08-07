@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import clsx from 'clsx';
-import jwt_decode from 'jwt-decode';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
-import { ListItem, ListItemIcon, ListItemText ,Hidden, Drawer, CssBaseline, AppBar, Toolbar, Typography, Divider, IconButton, Slide, Button, List, Dialog, DialogTitle, DialogContent, DialogActions, TextField, FormControlLabel, Checkbox} from '@material-ui/core';
+import { ListItem, ListItemIcon, ListItemText ,Hidden, Drawer, CssBaseline, AppBar, Toolbar, Typography, Divider, IconButton, Button, List, Dialog, DialogTitle, DialogContent, DialogActions, TextField, FormControlLabel, Checkbox} from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
@@ -188,6 +187,20 @@ const Navbar = () => {
       })
     }
 
+    const fetchProfile = () => {
+      axios({
+        method:'get',
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Content-Type":"application/json",
+          "Authorization": `Bearer ${document.cookie.split('=')[1]}`
+        },
+        url : '/api/profile/',
+      })
+      .then(response => console.log(response))
+      .catch(error => console.log(error))
+    }
+
     useEffect(() => {
         
         let token = decodeURIComponent(document.cookie.split('=')[1]);
@@ -196,16 +209,7 @@ const Navbar = () => {
             history.push('/');
         }
         else {
-            let data= jwt_decode(token);
-            console.log(data)
-            setData({
-            first_name: data.first_name, 
-            last_name: data.last_name,
-            email : data.email,
-            city: data.city,
-            state: data.state,
-            twitter: data.twitter
-          })
+            fetchProfile();
         }
     }, [dummy])
 

@@ -101,7 +101,7 @@ const Signup = () => {
                 method:'post',
                 headers : {
                     "Access-Control-Allow-Origin": "*",
-                    'Content-Type':'application/json'
+                    "Content-Type":"application/json"
                 },
                 data : {
                     first_name: values.fname,
