@@ -74,28 +74,28 @@ const Login = () => {
     const handleSubmit = (event) => {
         event.preventDefault();
         if(!emailerror && !passworderror) {
-            // axios({
-            //     method:'post',
-            //     headers : {
-            //         'Content-Type':'application/json'
-            //     },
-            //     data : {
-            //         email : values.email,
-            //         password : values.password
-            //     },
-            //     url: '/api/login',
-            // })
-            // .then(response => {
-            //     let date = new Date();
-            //     date.setTime(date.getTime() +  180 * 60 * 1000);     // 180 minutes
-            //     let expiration = `expires ${date.toUTCString()}`;
-            //     document.cookie = `usertoken = ${response.data.token}; expires = ${expiration} ;path=/`; 
-            //     setLoginError(false);
-            //     history.push('/dashboard');
-            // })
-            // .catch(() => {
-            //     setLoginError(true);
-            // })
+            axios({
+                method:'post',
+                headers : {
+                    'Content-Type':'application/json'
+                },
+                data : {
+                    email : values.email,
+                    password : values.password
+                },
+                url: '/api/login/',
+            })
+            .then((response) => {
+                let date = new Date();
+                date.setTime(date.getTime() +  180 * 60 * 1000);     // 180 minutes
+                let expiration = `expires ${date.toUTCString()}`;
+                document.cookie = `usertoken = ${response.data.token}; expires = ${expiration} ;path=/`; 
+                setLoginError(false);
+                history.push('/dashboard');
+            })
+            .catch((error) => {
+                setLoginError(true);
+            })
         }
     }
     useEffect(() => {
@@ -120,6 +120,12 @@ const Login = () => {
                         <Typography className={classes.login} align="center" variant="h4">
                             LOG IN
                         </Typography>
+                        {loginerror ?
+                        <Typography style={{color:'red', textAlign:'center'}}>
+                            Invalid Credentials! Please try again
+                        </Typography>
+                        :
+                        null}
                     </div>
                     <form className={classes.form} onSubmit={handleSubmit}>
                         <TextField
@@ -135,14 +141,14 @@ const Login = () => {
                             fullWidth required autoFocus
                         />
                         <TextField
-                            error={passworderror || loginerror}
+                            error={passworderror}
                             variant="outlined"
                             margin="normal"
                             label="Password"
                             id="password"
                             type = { values.showPassword ? 'text': 'password'}
                             onChange={handleChange}
-                            helperText = { passworderror ? "This is a required field!" : loginerror ? "Invalid Credentials" : null}
+                            helperText = { passworderror ? "This is a required field!" : null}
                             InputProps = {{
                                 endAdornment: 
                                     <IconButton 

@@ -112,8 +112,8 @@ const Navbar = () => {
     const [dialog, setDialog] = useState(false);
     const [data, setData] = useState({
       email : '',
-      fname : '',
-      lname: '',
+      first_name : '',
+      last_name: '',
       city: '',
       state: '',
       twitter: false
@@ -139,11 +139,11 @@ const Navbar = () => {
     
     const handleChange = (event) => {
       let id = event.currentTarget.id;
-      if( id === 'fname') {
-        setData({...data, fname:event.target.value})
+      if( id === 'first_name') {
+        setData({...data, first_name:event.target.value})
       }
-      else if(id === 'lname') {
-        setData({...data, lname:event.target.value})
+      else if(id === 'last_name') {
+        setData({...data, last_name:event.target.value})
       }
       else if(id === 'email') {
         setData({...data, email:event.target.value})
@@ -169,8 +169,8 @@ const Navbar = () => {
           'Content-Type':'application/json'
       },
       data : {
-          fname: data.fname,
-          lname: data.lname,
+          first_name: data.first_name,
+          last_name: data.last_name,
           email: data.email,
           password: data.password,
           city: data.city,
@@ -197,9 +197,10 @@ const Navbar = () => {
         }
         else {
             let data= jwt_decode(token);
+            console.log(data)
             setData({
-            fname: data.fname, 
-            lname: data.lname,
+            first_name: data.first_name, 
+            last_name: data.last_name,
             email : data.email,
             city: data.city,
             state: data.state,
@@ -255,11 +256,11 @@ const Navbar = () => {
             </div>
             <Divider />
 
-            <div className={classes.profile}> {data.fname.charAt(0)}{data.lname.charAt(0)}</div>
+            <div className={classes.profile}> {data.first_name.charAt(0)}{data.last_name.charAt(0)}</div>
 
             <Divider />
 
-            <p className={classes.name}>{data.fname} {data.lname}</p>
+            <p className={classes.name}>{data.first_name} {data.last_name}</p>
             <p className={classes.email}>{data.email} | {data.city}, {data.state}</p>
 
             <Button variant="contained" style={{ color: '#fff',margin: '10px auto 15px', backgroundColor: "#00acee"}} onClick={handleDialog}>Edit Profile</Button>
@@ -280,11 +281,11 @@ const Navbar = () => {
                   className={classes.textfield}
                   onChange= {handleChange}
                   margin="normal"
-                  id="fname"
+                  id="first_name"
                   label="First Name"
                   type="text"
                   autoComplete="First Name"
-                  value={ data.fname }
+                  value={ data.first_name }
                   autoFocus required fullWidth
                 />
                 <TextField
@@ -292,11 +293,11 @@ const Navbar = () => {
                   onChange= {handleChange}
                   variant="outlined"
                   margin="normal"
-                  id="lname"
+                  id="last_name"
                   label="Last Name"
                   type="text"
                   autoComplete="Last Name"
-                  value={ data.lname }
+                  value={ data.last_name }
                   autoFocus required fullWidth
                 />
                 <TextField

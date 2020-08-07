@@ -5,10 +5,10 @@ from .models import User
 
 
 class UserAdmin(BaseUserAdmin):
-    list_display = ('email', 'first_name', 'last_name', 'is_superuser', 'twitter')
+    list_display = ('username', 'email', 'first_name', 'last_name', 'is_superuser', 'twitter')
     list_filter = ('is_superuser', 'twitter')
     fieldsets = (
-        ('User Credentials', {'fields': ('email', 'password')}),
+        ('User Credentials', {'fields': ('username', 'email', 'password')}),
         ('Personal Details', {'fields': ('first_name', 'last_name', 'twitter')}),
         ('Location Details', {'fields': ('city', 'state')}),
         ('Rights', {'fields': ('is_staff', 'is_superuser')})

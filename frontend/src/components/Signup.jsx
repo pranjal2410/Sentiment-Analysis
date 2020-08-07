@@ -29,9 +29,7 @@ const useStyles = makeStyles((theme) => ({
         paddingTop: '10px'
     }, 
     form : {
-        padding: '20px',
-        paddingTop: '5px',
-        paddingBottom: '10px',
+        padding: '0px 20px 10px',
     },
     grid : {
         paddingTop : theme.spacing(1)
@@ -117,7 +115,6 @@ const Signup = () => {
                 url: '/api/register/',
             })
             .then(response => {
-                console.log(response);
                 let date = new Date();
                 date.setTime(date.getTime() +  180 * 60 * 1000);     // 180 minutes
                 let expiration = `expires ${date.toUTCString()}`;
@@ -153,6 +150,12 @@ const Signup = () => {
                         <Typography className={classes.signup} align="center" variant="h4">
                             SIGN UP
                         </Typography>
+                        {signuperror ?
+                        <Typography style={{color:'red', textAlign:'center'}}>
+                            Email Already Registered 
+                        </Typography>
+                        :
+                        null}
                     </div>
                     <form className={classes.form} onSubmit={handleSubmit}>
                     <Grid container spacing={2}>
@@ -190,7 +193,7 @@ const Signup = () => {
                                 variant="outlined"
                                 label="Email Address"
                                 onChange={handleChange}
-                                error={emailerror}
+                                error={emailerror || signuperror}
                                 helperText={emailerror ? (values.email.length ? "Invalid email ID" : "Email Address required ") : null}
                                 autoFocus required fullWidth
                             />

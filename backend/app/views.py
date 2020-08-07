@@ -1,11 +1,13 @@
 from django.contrib.auth import authenticate
-from rest_framework.generics import CreateAPIView
-from rest_framework.permissions import AllowAny
+from rest_framework.generics import CreateAPIView, RetrieveAPIView
+from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework import status
+from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 from rest_framework_jwt.settings import api_settings
 
 from .serliazers import RegisterSerializer, LoginSerializer
+from .models import User
 
 JWT_PAYLOAD_HANDLER = api_settings.JWT_PAYLOAD_HANDLER
 JWT_ENCODE_HANDLER = api_settings.JWT_ENCODE_HANDLER
@@ -63,3 +65,36 @@ class LoginView(CreateAPIView):
                 'message': 'Invalid Credentials! Please try again',
             }
             return Response(response, status=status.HTTP_401_UNAUTHORIZED)
+
+
+class ProfileView(RetrieveAPIView):
+    permission_classes = (IsAuthenticated,)
+    authentication_class = JSONWebTokenAuthentication
+
+    def get(self, request):
+        try:
+            user_profile = User.objects.get(username=request.user)
+            status_code = status.HTTP_200_OK
+            response = {
+                'success': 'true',
+                'status code': status_code,
+                'message': 'User profile fetched successfully',
+                'data': [{
+                    'email': user_profile.email,
+                    'first_name': user_profile.first_name,
+                    'last_name': user_profile.last_name,
+                    'city': user_profile.city,
+                    'state': user_profile.state,
+                    'twitter': user_profile.twitter
+                }]
+            }
+
+        except Exception as e:
+            status_code = status.HTTP_400_BAD_REQUEST
+            response = {
+                'success': 'false',
+                'status code': status.HTTP_400_BAD_REQUEST,
+                'message': 'User does not exists',
+                'error': str(e)
+            }
+        return Response(response, status=status_code)
