@@ -22,6 +22,9 @@
     <list default="true" id="01314f00-da69-4c05-907e-58809149695f" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/Login.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/components/Login.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/Navbar.js" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/components/Navbar.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/Signup.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/components/Signup.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -95,6 +98,9 @@
       <workItem from="1596727143001" duration="1981000" />
       <workItem from="1596736342667" duration="4154000" />
       <workItem from="1596779967171" duration="9535000" />
+      <workItem from="1596797888842" duration="558000" />
+      <workItem from="1596804254742" duration="1087000" />
+      <workItem from="1596810705652" duration="659000" />
     </task>
     <servers />
   </component>
