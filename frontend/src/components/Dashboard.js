@@ -2,6 +2,16 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Container, Typography, Grid, CircularProgress } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
+import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
+
+const theme = createMuiTheme();
+
+theme.typography.h2 = {
+	fontSize: '3rem',
+	[theme.breakpoints.up('md')]: {
+	  fontSize: '4rem',
+	},
+};
 
 const useStyles = makeStyles({
   table: {
@@ -37,12 +47,13 @@ const useStyles = makeStyles({
 
 const SimpleTable = () => {
   
-  const classes = useStyles();
-  const dummy = null;
-  const [rows, setRows] = useState([]);
-  const [latest, setLatest] = useState({});
-  const [time, setTime] = useState({});
-  const [spinner, setSpinner] = useState(true);
+	const classes = useStyles();
+	const dummy = null;
+	const [rows, setRows] = useState([]);
+	const [latest, setLatest] = useState({});
+	const [time, setTime] = useState({});
+	const [spinner, setSpinner] = useState(true);
+
 
 
   const fetchrows = () => {
@@ -62,8 +73,23 @@ const SimpleTable = () => {
     .catch(() => window.alert("Please Check you internet connection!"));
   }
 
+  const fetchtesting = () => {
+    axios({
+		method:'GET',
+		headers: {
+			"Content-Type": "application/json"
+		},
+		url: "https://api.rootnet.in/covid19-in/hospitals/beds"
+    })
+    .then(response => {
+		setTimeout(() => setSpinner(false), 1000);
+    })
+    .catch(() => window.alert("Please Check you internet connection!"));
+  }
+
   useEffect(() => { 
-	fetchrows() 
+	fetchrows();
+	fetchtesting();
   }, [dummy]);
 
   return (
@@ -76,12 +102,15 @@ const SimpleTable = () => {
 			</div>
 		:
 			<div>
-				<Typography variant="h2" className={classes.headers}>
-					Current COVID-19 Cases In India
-				</Typography>
+				<ThemeProvider theme={theme}>
+					<Typography variant="h2" className={classes.headers}>
+						Summary
+					</Typography>
+				</ThemeProvider>
 				<Typography className={classes.time}>
-					Cases updated on {time.slice(0,10)} at {time.slice(11,19)} IST 
+					Cases last updated on {time.slice(0,10)} at {time.slice(11,19)} IST 
 				</Typography>
+				
 				<Grid container spacing={3} style={{paddingBottom:'40px'}}>
 					<Grid item xs={12} sm={6}>
 						<Paper elevation={3} style={{paddingLeft:'2px', paddingRight:'2px'}}>
@@ -145,11 +174,11 @@ const SimpleTable = () => {
 					</Grid>
 				</Grid>
 				
-			
-				
-				<Typography variant="h2" className={classes.headers} >
-					State Wise COVID-19 Data In India
-				</Typography>
+				<ThemeProvider theme={theme}>
+					<Typography variant="h2" className={classes.headers} >
+						State Wise COVID-19 Data In India
+					</Typography>
+				</ThemeProvider>
 				<Typography className={classes.time}>
 					Cases updated on {time.slice(0,10)} at {time.slice(11,19)} IST 
 				</Typography>
