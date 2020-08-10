@@ -42,7 +42,7 @@ const useStyles = makeStyles((theme) => ({
 const Signup = () => {
     const classes = useStyles();
     const dummy = null;
-    let history = useHistory();
+    const history = useHistory();
     const [values, setValues] = useState({
         fname: '',
         lname: '',
@@ -133,7 +133,7 @@ const Signup = () => {
         if(token !== '' && token !== undefined) {
             history.push('/dashboard')
         } 
-    },[dummy])
+    },[dummy, history])
 
 
     return (

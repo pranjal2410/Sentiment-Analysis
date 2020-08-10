@@ -217,40 +217,35 @@ const Navbar = () => {
     }
 
     const fetchProfile = () => {
-      let cookie = getCookie("usertoken");
-      if(cookie === null) {
-        history.push('/');
-      }
-      else {
-        axios({
-          method:'get',
-          headers: {
-            "Access-Control-Allow-Origin": "*",
-            "Content-Type":"application/json",
-            "Authorization": `Bearer ${cookie}`
-          },
-          url : '/api/profile/',
-        })
-        .then(response => {
-          let object = response.data.data[0];
-          setData({
-            email: object.email,
-            first_name : object.first_name,
-            last_name: object.last_name,
-            city: object.city,
-            state: object.state,
-            twitter: object.twitter
+      	let cookie = getCookie("usertoken");
+		axios({
+			method:'get',
+			headers: {
+			"Access-Control-Allow-Origin": "*",
+			"Content-Type":"application/json",
+			"Authorization": `Bearer ${cookie}`
+			},
+			url : '/api/profile/',
+		})
+		.then(response => {
+			let object = response.data.data[0];
+			setData({
+			email: object.email,
+			first_name : object.first_name,
+			last_name: object.last_name,
+			city: object.city,
+			state: object.state,
+			twitter: object.twitter
 
-          })
-        })
-        .catch(error => console.log(error))
-        }
-    }
+			})
+		})
+		.catch(error => console.log(error))
+		}
 
     useEffect(() => {
-        fetchProfile();
+		fetchProfile();
     }, [dummy])
-
+	
     return (
 		<div className={classes.root}>
 			<CssBaseline />

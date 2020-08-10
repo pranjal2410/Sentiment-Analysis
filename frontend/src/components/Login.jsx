@@ -51,7 +51,7 @@ const useStyles = makeStyles((theme) => ({
 const Login = () => {
     const classes = useStyles();
     const dummy = null;
-    let history = useHistory();
+    const history = useHistory();
     const [values,setValues] = useState({
         email: '',
         password: '',
@@ -104,7 +104,7 @@ const Login = () => {
         if(token !== '' && token !== undefined) {
             history.push('/dashboard')
         } 
-    },[dummy])
+    },[dummy, history])
 
     return (
         <Container component="main" maxWidth="sm">

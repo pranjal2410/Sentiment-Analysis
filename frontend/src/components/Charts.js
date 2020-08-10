@@ -78,7 +78,7 @@ const Charts = () => {
         else if(event.currentTarget.id === 'switch2') {
             setToggle({...toggle, switch2:!toggle.switch2})
         } 
-        else if(event.currentTarget.id == 'switch3') {
+        else if(event.currentTarget.id === 'switch3') {
             setToggle({...toggle, switch3:!toggle.switch3})
         }
     }
