@@ -12,25 +12,14 @@ import { getCookie } from './components/Cookie';
 
 
 const App = () => {
-  const [isAuth, setIsAuth] = useState(false);
-  const dummy = null
-  useEffect(() => {
-    if(getCookie("usertoken") !== '') {
-      setIsAuth(true);
-    }
-  }, [dummy])
   return (
     <div className='main'>      
       <BrowserRouter>
         <Switch>     
             <Route exact path='/' component={Login} />
             <Route path='/signup' component={Signup} />
-            isAuth ?
-            <GuardedRoute path='/dashboard' component={Dashboard} auth={isAuth} />
-            <GuardedRoute path='/dashboard/charts' component={Charts} auth={isAuth} />
-            :
-            null
-            
+            <GuardedRoute exact path='/dashboard' component={Dashboard}/>
+            <GuardedRoute path='/dashboard/charts' component={Charts}/>
         </Switch>
       </BrowserRouter> 
     </div>

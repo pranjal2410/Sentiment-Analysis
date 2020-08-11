@@ -3,6 +3,7 @@ import { Link, useHistory } from 'react-router-dom';
 import axios from 'axios';
 import { Container, Typography, makeStyles, Paper, TextField, Button, Avatar, IconButton } from '@material-ui/core';
 import { LockOpen, Twitter, Visibility, VisibilityOff } from '@material-ui/icons';
+import { getCookie } from './Cookie';
 
 const useStyles = makeStyles((theme) => ({
     cont : {
@@ -100,7 +101,7 @@ const Login = () => {
         }
     }
     useEffect(() => {
-        let token = document.cookie.split('=')[1];
+        let token = getCookie("usertoken");
         if(token !== '' && token !== undefined) {
             history.push('/dashboard')
         } 
