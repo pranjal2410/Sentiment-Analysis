@@ -4,14 +4,6 @@ import Navbar from './Navbar'
 import { getCookie } from './Cookie';
 
 const GuardedRoute = ({ component: Component, ...rest }) => {
-    // <>
-    //     <Navbar />
-    //     <Route {...rest} render={(props) => (
-    //         auth === true
-    //             ? <Component {...props} />
-    //             : <Redirect to='/' />
-    //     )} />
-    // </>
     return(
         <Route 
             {...rest} 

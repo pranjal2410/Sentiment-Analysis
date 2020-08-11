@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 
 import Signup from './components/Signup';
 import Login from './components/Login';
@@ -7,8 +7,6 @@ import Charts from './components/Charts';
 import GuardedRoute from './components/GuardedRoute';
 
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
-
-import { getCookie } from './components/Cookie';
 
 
 const App = () => {
