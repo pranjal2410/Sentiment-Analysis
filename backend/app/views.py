@@ -123,3 +123,18 @@ class EditView(APIView):
                 'status code': status.HTTP_401_UNAUTHORIZED,
             }
             return Response(response, status=status.HTTP_401_UNAUTHORIZED)
+
+
+class SentimentsView(RetrieveAPIView):
+    permission_classes = (IsAuthenticated,)
+    authentication_classes = (JSONWebTokenAuthentication,)
+
+    def get(self, request):
+        predictions = pd.read_csv('predictions.csv')
+        sentiments = predictions.loc[:, 'Labels'].values
+        response = {
+            'sentiments': sentiments,
+            'status code': status.HTTP_200_OK
+        }
+
+        return Response(response, status=status.HTTP_200_OK)

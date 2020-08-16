@@ -8,5 +8,6 @@ urlpatterns = [
     path('api/login/', LoginView.as_view(), name='login'),
     path('api/profile/', ProfileView.as_view(), name='profile'),
     path('api/edit/', EditView.as_view(), name='edit'),
+    path('api/sentiments/', SentimentsView.as_view(), name='sentiments'),
     path('admin/', admin.site.urls),
 ]
